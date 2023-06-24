@@ -1,3 +1,18 @@
+## Notes
+### Updating Dependencies (https://stackoverflow.com/a/16074029)
+1. Install npm-check-updates
+    ```bash
+    npm i -g npm-check-updates
+    ```
+2. Run npm-check-updates
+    ```bash
+    npx npm-check-updates
+    ```
+3. Update package.json
+    ```bash
+    npx npm-check-updates -u
+    ```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,0 +1,17 @@
+// pages/Projects.jsx
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import ProjectCard from '../components/common/ProjectCard';
+import projects from '../data/projects';
+
+const Projects = () => {
+  return (
+    <div>
+      {projects.map((project, index) => (
+        <ProjectCard key={index} {...project} />
+      ))}
+    </div>
+  );
+};
+
+export default Projects;
