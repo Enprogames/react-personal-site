@@ -1,4 +1,4 @@
-import Navbar from './components/Navbar';
+import CustomNavbar from './components/Navbar';
 
 import Home from './pages/Home';
 import Resume from './pages/Resume';
@@ -7,25 +7,27 @@ import Hobbies from './pages/Hobbies';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
-import {Link, Routes, Route} from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 
 
 function App() {
   return (
     <>
-      <Navbar />
+      <CustomNavbar />
 
-      <Routes>
-        <Route exact path="/" element={<Home />}/>
-        <Route exact path="/Resume" element={<Resume />}/>
-        <Route exact path="/Projects" element={<Projects />}/>
-        <Route exact path="/Hobbies" element={<Hobbies />}/>
-        <Route exact path="/Contact" element={<Contact />}/>
-        <Route exact path="/about" element={<About />}/>
-        <Route path="*" element={<NotFound/>}/>
-      </Routes>
+      <main>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/Resume" element={<Resume />} />
+          <Route exact path="/Projects" element={<Projects />} />
+          <Route exact path="/Hobbies" element={<Hobbies />} />
+          <Route exact path="/Contact" element={<Contact />} />
+          <Route exact path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
     </>
   );
 }
-  
+
 export default App;
