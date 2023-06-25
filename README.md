@@ -1,4 +1,12 @@
 ## Notes
+### Deploying to Github Pages
+- Can pull and push to Github on main branch like normal
+- [react-github-pages](https://github.com/gitname/react-gh-pages) has tooling for automatic deployment.
+
+Updating the site:
+1. Make sure you are on the main branch
+2. Run `npm run deploy -- -m "Your optional commit message"`
+
 ### Updating Dependencies (https://stackoverflow.com/a/16074029)
 1. Install npm-check-updates
     ```bash
