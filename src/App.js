@@ -1,4 +1,11 @@
-import CustomNavbar from './components/Navbar';
+// App.js
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+
+import { CustomNavbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import { DarkModeToggle } from './components/toggledarkmode';
 
 import Home from './pages/Home';
 import Resume from './pages/Resume';
@@ -7,15 +14,16 @@ import Hobbies from './pages/Hobbies';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
-import { Link, Routes, Route } from 'react-router-dom';
 
 
 function App() {
+
   return (
     <>
       <CustomNavbar />
+      <DarkModeToggle />
 
-      <main>
+      <Container fluid className="pt-5 mt-5 mb-5">
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/Resume" element={<Resume />} />
@@ -25,7 +33,8 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </main>
+      </Container>
+      <Footer />
     </>
   );
 }

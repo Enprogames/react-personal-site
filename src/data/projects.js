@@ -1,6 +1,6 @@
 // data/projects.js
 
-const projects = [
+export const projects = [
     {
         title: 'SQL Injection Example Website',
         repositoryLink: 'https://github.com/Enprogames/sql-injection-example',
@@ -106,5 +106,3 @@ const projects = [
         ]
     }
 ];
-
-export default projects;

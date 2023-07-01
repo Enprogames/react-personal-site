@@ -1,29 +1,33 @@
+// components/Navbar/index.js
+import React, { useState } from 'react';
+
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const CustomNavbar = () => {
+export const CustomNavbar = () => {
+    const [expanded, setExpanded] = useState(false);
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar expand="lg" className="bg-body-tertiary" fixed="top" expanded={expanded}>
             <Container>
                 <LinkContainer to="/">
                     <Navbar.Brand>Ethan Posner</Navbar.Brand>
                 </LinkContainer>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <LinkContainer to="/">
+                        <LinkContainer to="/" onClick={() => setExpanded(false)}>
                             <Nav.Link>Home</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="/Resume">
+                        <LinkContainer to="/Resume" onClick={() => setExpanded(false)}>
                             <Nav.Link>Resume</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="/Projects">
+                        <LinkContainer to="/Projects" onClick={() => setExpanded(false)}>
                             <Nav.Link>Projects</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="/Hobbies">
+                        <LinkContainer to="/Hobbies" onClick={() => setExpanded(false)}>
                             <Nav.Link>Hobbies</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="/About">
+                        <LinkContainer to="/About" onClick={() => setExpanded(false)}>
                             <Nav.Link>About</Nav.Link>
                         </LinkContainer>
                     </Nav>
@@ -32,5 +36,3 @@ const CustomNavbar = () => {
         </Navbar>
     );
 };
-
-export default CustomNavbar;

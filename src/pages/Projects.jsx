@@ -1,7 +1,7 @@
 // pages/Projects.jsx
 import React from 'react';
-import ProjectCard from '../components/common/ProjectCard';
-import projects from '../data/projects';
+import { ProjectCard } from '../components/ProjectCard';
+import { projects } from '../data/projects';
 
 const Projects = () => {
   return (
