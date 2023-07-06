@@ -1,7 +1,7 @@
 ## Notes
 ### Deploying to Github Pages
 - Can pull and push to Github on main branch like normal
-- [react-github-pages](https://github.com/gitname/react-gh-pages) has tooling for automatic deployment.
+- [react-personal-site](https://enprogames.github.io/react-personal-site/)
 
 Updating the site:
 1. Make sure you are on the main branch

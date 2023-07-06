@@ -1,11 +1,12 @@
 // components/toggledarkmode/index.js
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import './darkModeToggle.css'; // assuming you have this css file in the same directory
+import { ThemeContext } from '../../ThemeContext';
 
 export const DarkModeToggle = () => {
-  const [theme, setTheme] = useState('light');
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');

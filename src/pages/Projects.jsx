@@ -1,13 +1,13 @@
 // pages/Projects.jsx
 import React from 'react';
-import { ProjectCard } from '../components/ProjectCard';
+import { ProjectPane } from '../components/ProjectPane';
 import { projects } from '../data/projects';
 
 const Projects = () => {
   return (
     <div>
       {projects.map((project, index) => (
-        <ProjectCard key={index} {...project} />
+        <ProjectPane key={index} {...project} />
       ))}
     </div>
   );

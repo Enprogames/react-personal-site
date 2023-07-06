@@ -1,0 +1,8 @@
+/* components/Socialicons/Socialicons.css */
+.text-dark-hover:hover {
+    color: #343a40 !important;  /* A slightly different dark color */
+}
+
+.text-light-hover:hover {
+    color: #f8f9fa !important;  /* A slightly different light color */
+}
