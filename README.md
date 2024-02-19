@@ -3,6 +3,11 @@
 - Can pull and push to Github on main branch like normal
 - [react-personal-site](https://enprogames.github.io/react-personal-site/)
 
+### Setup and Run Locally
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run the app: `npm start`
+
 Updating the site:
 1. Make sure you are on the main branch
 2. Run `npm run deploy -- -m "Your optional commit message"`
