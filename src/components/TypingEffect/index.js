@@ -8,7 +8,7 @@ export const TypingEffect = () => {
         { text: 'Backend Web Developer' },
         { text: 'Frontend Web Developer' },
         { text: 'Hiking Enthusiast' },
-        { text: 'Biking Enthusiast' },
+        { text: 'Cycling Enthusiast' },
         { text: 'Django Developer' },
         { text: 'React Developer' },
         { text: 'Python Developer' },
@@ -19,6 +19,12 @@ export const TypingEffect = () => {
         { text: 'Web Designer' },
         { text: 'AWS Full-Stack Engineer' }
     ];
+
+    // Fisher-Yates Shuffle
+    for (let i = messages.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [messages[i], messages[j]] = [messages[j], messages[i]]; // Swap
+    }
 
     return (
         <ReactTypingEffect

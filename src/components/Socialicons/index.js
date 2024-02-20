@@ -9,7 +9,7 @@ import {
   FaYoutube,
   FaTwitch,
 } from "react-icons/fa";
-import { socialprofiles } from "../../data/social_accounts";
+import { socialprofiles } from "../../Assets/social_accounts";
 import { ThemeContext } from '../../ThemeContext';
 import './Socialicons.css';
 

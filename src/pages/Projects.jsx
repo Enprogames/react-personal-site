@@ -1,7 +1,7 @@
 // pages/Projects.jsx
 import React from 'react';
 import { ProjectPane } from '../components/ProjectPane';
-import { projects } from '../data/projects';
+import { projects } from '../Assets/projects';
 
 const Projects = () => {
   return (
