@@ -1,0 +1,16 @@
+/* ProjectPane.css */
+.project-image {
+  width: 100%; /* Make the image responsive to its parent container */
+  height: 200px; /* Fixed height */
+  object-fit: cover; /* Cover the area without losing aspect ratio */
+  border-radius: 0.25rem; /* Optional: Adds rounded corners */
+}
+.card-lift:hover {
+  transform: translateY(-5px); /* Lifts the card up on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for lift and shadow */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); /* Increase shadow size */
+}
+.card-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for lift and shadow */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Add shadow to the card */
+}

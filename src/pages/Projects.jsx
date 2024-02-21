@@ -5,11 +5,20 @@ import { projects } from '../Assets/projects';
 
 const Projects = () => {
   return (
-    <div>
-      {projects.map((project, index) => (
-        <ProjectPane key={index} {...project} />
-      ))}
-    </div>
+    <>
+        {projects.map((project, index) => (
+            <ProjectPane
+              key={index}
+              title={project.title}
+              description={project.description}
+              keyPoints={project.keyPoints}
+              technologies={project.technologies}
+              image={project.landscapeImage}
+              elements={project.elements}
+              repositoryLink={project.repositoryLink} />
+
+        ))}
+      </>
   );
 };
 

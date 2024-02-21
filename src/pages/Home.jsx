@@ -3,8 +3,8 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { TypingEffect } from '../components/TypingEffect';
 import { FaCircle } from "react-icons/fa";
-
 import ProjectCard from '../components/ProjectCard';
+import { projects } from '../Assets/projects';
 
 const Home = () => {
   return (
@@ -15,11 +15,13 @@ const Home = () => {
           <TypingEffect />
         </Container>
       </header>
-      
+
       <section className="about mt-5">
         <Container>
           <h2 className="text-center mb-4">About Me</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae suscipit purus, quis convallis neque.</p>
+          <p>
+            I am a full-stack developer with a passion for learning. I have experience in building web applications using React, and Python. I am also familiar with AWS and have experience in deploying applications to the cloud. I am always looking for opportunities to learn and grow as a developer.
+          </p>
         </Container>
       </section>
 
@@ -43,15 +45,15 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-4">Portfolio</h2>
           <Row>
-            {/* Insert your portfolio items here */}
-            <Col sm={4}>
-              <ProjectCard
-                title="Project 1"
-                description="Some quick example text to build on the card title and make up the bulk of the card's content."
-                imgSrc="holder.js/100px180" // Replace with actual image path
-              />
-            </Col>
-            {/* Add more projects here */}
+            {projects.map((project, index) => (
+              <Col sm={4} key={index}>
+                <ProjectCard
+                  title={project.title}
+                  description={project.description}
+                  imgSrc={project.thumbnail}
+                />
+              </Col>
+            ))}
           </Row>
         </Container>
       </section>

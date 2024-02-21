@@ -63,16 +63,6 @@ const Resume = () => {
             </Card.Body></Card>
           </Col>
         </Row>
-        <Row className="justify-content-center mt-5 mb-3">
-          <Col xs={12} md={8} className="d-flex justify-content-center">
-            <Button
-              variant="primary"
-              href={resume_pdf}
-              target="_blank">
-            <AiOutlineDownload size={24} className="me-2" />
-              &nbsp;Download Resume</Button>
-          </Col>
-        </Row>
       </Container>
     </>
   );

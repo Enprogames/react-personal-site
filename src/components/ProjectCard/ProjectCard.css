@@ -1,0 +1,11 @@
+/* ProjectCard.css */
+.card-img-top {
+  height: 200px; /* Fixed height */
+  object-fit: cover; /* Cover fits the content to the container without losing aspect ratio */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This ensures that the button aligns to the bottom */
+}
