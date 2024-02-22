@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Container, Row, Col, Card } from "react-bootstrap";
 import { pdfjs, Document, Page } from 'react-pdf';
 import { AiOutlineDownload } from "react-icons/ai";
@@ -13,6 +13,7 @@ const Resume = () => {
 
     const [numPages, setNumPages] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const pdfContainerRef = useRef(null);
 
     useEffect(() => {
       const handleWindowSize = () => {
@@ -31,6 +32,15 @@ const Resume = () => {
         setNumPages(numPages);
     }
 
+    // Adjust scale based on window width
+    const getScale = () => {
+      const containerWidth = pdfContainerRef.current ? pdfContainerRef.current.offsetWidth : 0;
+      const baseWidth = 600; // Adjust this base width according to your PDF page size
+      const scale = containerWidth / baseWidth;
+      const minScale = 0.75; // Set a minimum scale to ensure content is readable
+      return Math.max(scale, minScale); // Use the maximum between calculated scale and minimum scale
+    };
+
   return (
     <>
       <Container fluid className="py-5">
@@ -47,19 +57,21 @@ const Resume = () => {
         <Row className="justify-content-center">
           <Col xs={12} md={10}>
             <Card className="shadow"><Card.Body className="pdf-container">
-              <Document
-                file={resume_pdf}
-                onLoadSuccess={onDocumentLoadSuccess}
-                className="d-flex justify-content-center">
-                {Array.from(new Array(numPages),
-                  (el, index) => (
-                    <Page
-                      key={`page_${index + 1}`}
-                      pageNumber={index + 1}
-                      width={windowWidth < 768 ? Math.min(windowWidth * 0.8, 600) : 600} />
-                  ),
-                )}
-              </Document>
+              <div ref={pdfContainerRef} className="d-flex justify-content-center">
+                <Document
+                  file={resume_pdf}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                  className="d-flex align-items-center flex-column">
+                  {Array.from(new Array(numPages),
+                    (el, index) => (
+                      <Page
+                        key={`page_${index + 1}`}
+                        pageNumber={index + 1}
+                        scale={getScale()} />
+                    ),
+                  )}
+                </Document>
+              </div>
             </Card.Body></Card>
           </Col>
         </Row>
