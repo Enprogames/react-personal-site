@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.eabff07c.css",
-    "main.js": "/static/js/main.111bf344.js",
+    "main.css": "/static/css/main.61b86ed1.css",
+    "main.js": "/static/js/main.6cf413f5.js",
     "react-syntax-highlighter/refractor-core-import.js": "/static/js/react-syntax-highlighter/refractor-core-import.af6d0b86.chunk.js",
     "react-syntax-highlighter_languages_refractor_abap.js": "/static/js/react-syntax-highlighter_languages_refractor_abap.a2106cc0.chunk.js",
     "react-syntax-highlighter_languages_refractor_abnf.js": "/static/js/react-syntax-highlighter_languages_refractor_abnf.bc61ab6b.chunk.js",
@@ -284,12 +284,14 @@
     "static/media/sql-injection1.JPG": "/static/media/sql-injection1.25573b8751c5b2d5cfce.JPG",
     "static/media/clock1.JPG": "/static/media/clock1.9f43d3e2efdce043fe7f.JPG",
     "static/media/flashcard-tool1.JPG": "/static/media/flashcard-tool1.b4cf39d13811857f80ce.JPG",
+    "static/media/tekku_title_page_large.jpeg": "/static/media/tekku_title_page_large.3c56e83f17bd6e807069.jpeg",
     "static/media/flashcard-tool2.JPG": "/static/media/flashcard-tool2.ce73141c76ef5e67618f.JPG",
     "static/media/sql-injection2.JPG": "/static/media/sql-injection2.e43ac2e15ad8ab18847d.JPG",
+    "static/media/tekku_title_page_small.jpeg": "/static/media/tekku_title_page_small.3b5a5258898b8a46d4da.jpeg",
     "static/media/music-player1.JPG": "/static/media/music-player1.ab4b11eca012265134b8.JPG",
     "index.html": "/index.html",
-    "main.eabff07c.css.map": "/static/css/main.eabff07c.css.map",
-    "main.111bf344.js.map": "/static/js/main.111bf344.js.map",
+    "main.61b86ed1.css.map": "/static/css/main.61b86ed1.css.map",
+    "main.6cf413f5.js.map": "/static/js/main.6cf413f5.js.map",
     "refractor-core-import.af6d0b86.chunk.js.map": "/static/js/react-syntax-highlighter/refractor-core-import.af6d0b86.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_abap.a2106cc0.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_abap.a2106cc0.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_abnf.bc61ab6b.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_abnf.bc61ab6b.chunk.js.map",
@@ -570,7 +572,7 @@
     "react-syntax-highlighter_languages_refractor_zig.df97e290.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_zig.df97e290.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.eabff07c.css",
-    "static/js/main.111bf344.js"
+    "static/css/main.61b86ed1.css",
+    "static/js/main.6cf413f5.js"
   ]
 }
