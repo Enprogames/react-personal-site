@@ -16,6 +16,8 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 
+import './App.css';
+
 
 function App() {
 
@@ -27,7 +29,7 @@ function App() {
         <DarkModeToggle />
         <CustomNavbar />
 
-        <Container fluid className="pt-5 mt-5 mb-5">
+        <Container fluid className="mb-5">
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/Resume" element={<Resume />} />

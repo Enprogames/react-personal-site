@@ -7,9 +7,22 @@ export const clock1 = require('./img/projects/clock1.JPG');
 export const musicPlayer1 = require('./img/projects/music-player1.JPG');
 export const sqlInjection1 = require('./img/projects/sql-injection1.JPG');
 export const sqlInjection2 = require('./img/projects/sql-injection2.JPG');
+export const tekku1 = require('./img/projects/tekku_title_page_small.jpeg');
+export const tekku2 = require('./img/projects/tekku_title_page_large.jpeg');
 
 
 export const projects = [
+    {
+        title: 'Tekku: PHP Forum Website',
+        repositoryLink: 'https://github.com/Enprogames/Tekku',
+        thumbnail: tekku1,
+        landscapeImage: tekku2,
+        description: `A forum website, created in collaboration with Nicholas Hopkins, that allows users to post content under various topics. It features user registration and logging in, and stores posts and comments in a MySQL database. This was an exercise in creating a full-stack web application. It was an excellent experience in learning how to create a website from scratch, and how to use PHP and MySQL.`,
+        keyPoints: [
+            'Fully functional forum website',
+            'Implemented using a fully-fledged web backend with Apache, PHP, and MySQL'
+        ],
+    },
     {
         title: 'SQL Injection Example Website',
         repositoryLink: 'https://github.com/Enprogames/sql-injection-example',

@@ -1,0 +1,10 @@
+
+/* Move down content because we have a fixed navbar that is >80px tall */
+body {
+    padding-top: 80px;
+}
+@media (max-width: 979px) {
+    body {
+        padding-top: 80px;
+    }
+}

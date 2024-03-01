@@ -8,8 +8,12 @@ const ProjectCard = ({ title, description, imgSrc }) => {
 
     return (
         <HashLink
-            smooth
             to={`/projects#${encodeURIComponent(title.toLowerCase().replace(/ /g, '-'))}`}
+            scroll={(el) => {
+                const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
+                const yOffset = -60; // Adjust this value based on your navbar's height
+                window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
+            }}
             className="text-decoration-none">
             <Card
                 className="shadow h-100 card-lift"
