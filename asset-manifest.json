@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.61b86ed1.css",
-    "main.js": "/static/js/main.6cf413f5.js",
+    "main.js": "/static/js/main.124fbbc7.js",
     "react-syntax-highlighter/refractor-core-import.js": "/static/js/react-syntax-highlighter/refractor-core-import.af6d0b86.chunk.js",
     "react-syntax-highlighter_languages_refractor_abap.js": "/static/js/react-syntax-highlighter_languages_refractor_abap.a2106cc0.chunk.js",
     "react-syntax-highlighter_languages_refractor_abnf.js": "/static/js/react-syntax-highlighter_languages_refractor_abnf.bc61ab6b.chunk.js",
@@ -234,7 +234,7 @@
     "react-syntax-highlighter_languages_refractor_solutionFile.js": "/static/js/react-syntax-highlighter_languages_refractor_solutionFile.4de93609.chunk.js",
     "react-syntax-highlighter_languages_refractor_soy.js": "/static/js/react-syntax-highlighter_languages_refractor_soy.0ca9830b.chunk.js",
     "react-syntax-highlighter_languages_refractor_sparql.js": "/static/js/react-syntax-highlighter_languages_refractor_sparql.653a074a.chunk.js",
-    "react-syntax-highlighter_languages_refractor_splunkSpl.js": "/static/js/react-syntax-highlighter_languages_refractor_splunkSpl.504e2879.chunk.js",
+    "react-syntax-highlighter_languages_refractor_splunkSpl.js": "/static/js/react-syntax-highlighter_languages_refractor_splunkSpl.2ad7b4a0.chunk.js",
     "react-syntax-highlighter_languages_refractor_sqf.js": "/static/js/react-syntax-highlighter_languages_refractor_sqf.a0f10132.chunk.js",
     "react-syntax-highlighter_languages_refractor_sql.js": "/static/js/react-syntax-highlighter_languages_refractor_sql.412a757d.chunk.js",
     "react-syntax-highlighter_languages_refractor_squirrel.js": "/static/js/react-syntax-highlighter_languages_refractor_squirrel.4575685f.chunk.js",
@@ -281,8 +281,10 @@
     "react-syntax-highlighter_languages_refractor_yang.js": "/static/js/react-syntax-highlighter_languages_refractor_yang.1849b054.chunk.js",
     "react-syntax-highlighter_languages_refractor_zig.js": "/static/js/react-syntax-highlighter_languages_refractor_zig.df97e290.chunk.js",
     "static/media/resume.pdf": "/static/media/resume.a798134c907bc398c212.pdf",
+    "static/media/bitcoin_paths.jpg": "/static/media/bitcoin_paths.0ece336d13f9b0b715da.jpg",
     "static/media/sql-injection1.JPG": "/static/media/sql-injection1.25573b8751c5b2d5cfce.JPG",
     "static/media/clock1.JPG": "/static/media/clock1.9f43d3e2efdce043fe7f.JPG",
+    "static/media/bitcoin_history.jpg": "/static/media/bitcoin_history.b804c658203d957d8e2a.jpg",
     "static/media/flashcard-tool1.JPG": "/static/media/flashcard-tool1.b4cf39d13811857f80ce.JPG",
     "static/media/tekku_title_page_large.jpeg": "/static/media/tekku_title_page_large.3c56e83f17bd6e807069.jpeg",
     "static/media/flashcard-tool2.JPG": "/static/media/flashcard-tool2.ce73141c76ef5e67618f.JPG",
@@ -291,7 +293,7 @@
     "static/media/music-player1.JPG": "/static/media/music-player1.ab4b11eca012265134b8.JPG",
     "index.html": "/index.html",
     "main.61b86ed1.css.map": "/static/css/main.61b86ed1.css.map",
-    "main.6cf413f5.js.map": "/static/js/main.6cf413f5.js.map",
+    "main.124fbbc7.js.map": "/static/js/main.124fbbc7.js.map",
     "refractor-core-import.af6d0b86.chunk.js.map": "/static/js/react-syntax-highlighter/refractor-core-import.af6d0b86.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_abap.a2106cc0.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_abap.a2106cc0.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_abnf.bc61ab6b.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_abnf.bc61ab6b.chunk.js.map",
@@ -524,7 +526,7 @@
     "react-syntax-highlighter_languages_refractor_solutionFile.4de93609.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_solutionFile.4de93609.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_soy.0ca9830b.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_soy.0ca9830b.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_sparql.653a074a.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_sparql.653a074a.chunk.js.map",
-    "react-syntax-highlighter_languages_refractor_splunkSpl.504e2879.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_splunkSpl.504e2879.chunk.js.map",
+    "react-syntax-highlighter_languages_refractor_splunkSpl.2ad7b4a0.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_splunkSpl.2ad7b4a0.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_sqf.a0f10132.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_sqf.a0f10132.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_sql.412a757d.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_sql.412a757d.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_squirrel.4575685f.chunk.js.map": "/static/js/react-syntax-highlighter_languages_refractor_squirrel.4575685f.chunk.js.map",
@@ -573,6 +575,6 @@
   },
   "entrypoints": [
     "static/css/main.61b86ed1.css",
-    "static/js/main.6cf413f5.js"
+    "static/js/main.124fbbc7.js"
   ]
 }
