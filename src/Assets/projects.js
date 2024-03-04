@@ -9,9 +9,44 @@ export const sqlInjection1 = require('./img/projects/sql-injection1.JPG');
 export const sqlInjection2 = require('./img/projects/sql-injection2.JPG');
 export const tekku1 = require('./img/projects/tekku_title_page_small.jpeg');
 export const tekku2 = require('./img/projects/tekku_title_page_large.jpeg');
-
+export const bitcoin1 = require('./img/projects/bitcoin_history.jpg')
+export const bitcoin2 = require('./img/projects/bitcoin_paths.jpg')
 
 export const projects = [
+    {
+        title: 'Bitcoin Research Project',
+        repositoryLink: 'https://github.com/Enprogames/Bitcoin_JanusGraph',
+        thumbnail: bitcoin1,
+        landscapeImage: bitcoin2,
+        description: `As part of my senior research project at VIU, I developed a graph representation of the Bitcoin blockchain data. This graph representation is intended to be used for tracing Bitcoin transactions and for developing algorithms to achieve it.`,
+        keyPoints: [
+            'Developed a novel data model for representing bitcoin transactions in a graph database.',
+            'Used depth-first search algorithms to efficiently determine sources of specific bitcoins, going backwards and forwards through time.'
+        ],
+        technologies: [
+            'Python (SQLAlchemy, Alembic, etc)',
+            'JanusGraph graph database',
+            'PostgreSQL relational database'
+        ],
+        'elements': [
+            {
+                type: 'paragraph',
+                content: `It is fascinating to analyze the complex transactions on the Bitcoin blockchain. Since all transaction data is public, it is possible to trace the flow of Bitcoin from its creation to its current location. This is not a completely straightforward task, as it involves a bit of estimation and guesswork, but it allows for telling the source and destination of specific Bitcoins with some degree of certainty.`
+            },
+            {
+                type: 'paragraph',
+                content: `The main challanges when attempting to trace Bitcoin transaction histories are:`
+            },
+            {
+                type: 'points',
+                content: [
+                    'The massive scale of the Bitcoin blockchain dataset and the transactions therein',
+                    'The complexity of the Bitcoin transaction data model, and',
+                    'the presence of "bad data", such as duplicate transactions.'
+                ]
+            }
+        ]
+    },
     {
         title: 'Tekku: PHP Forum Website',
         repositoryLink: 'https://github.com/Enprogames/Tekku',
@@ -19,9 +54,12 @@ export const projects = [
         landscapeImage: tekku2,
         description: `A forum website, created in collaboration with Nicholas Hopkins, that allows users to post content under various topics. It features user registration and logging in, and stores posts and comments in a MySQL database. This was an exercise in creating a full-stack web application. It was an excellent experience in learning how to create a website from scratch, and how to use PHP and MySQL.`,
         keyPoints: [
-            'Fully functional forum website',
-            'Implemented using a fully-fledged web backend with Apache, PHP, and MySQL'
+            'Fully functional forum website.',
+            'Implemented using a fully-fledged web backend with Apache, PHP, and MySQL.'
         ],
+        technologies: [
+            'PHP', 'MySQL', 'Apache Web Server', 'Docker'
+        ]
     },
     {
         title: 'SQL Injection Example Website',
