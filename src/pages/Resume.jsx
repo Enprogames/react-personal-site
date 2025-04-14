@@ -7,12 +7,17 @@ import './Resume.css';
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+// Placed this configuration outsude this component function, at the top level of the module.
+// Could use the '.mjs' file for modern module support.
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url, // Helps the bundler locate the worker relative to this file
+).toString();
 
 const Resume = () => {
 
     const [numPages, setNumPages] = useState(null);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [, setWindowWidth] = useState(window.innerWidth);
     const pdfContainerRef = useRef(null);
 
     useEffect(() => {

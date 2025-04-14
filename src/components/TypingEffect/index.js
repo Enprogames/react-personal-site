@@ -1,6 +1,6 @@
-// components/TypingEffect/index.js
+// src/components/TypingEffect/index.js
 import React from 'react';
-import ReactTypingEffect from 'react-typing-effect';
+import { TypeAnimation } from 'react-type-animation';
 
 export const TypingEffect = () => {
     const messages = [
@@ -17,22 +17,33 @@ export const TypingEffect = () => {
         { text: 'Software Developer' },
         { text: 'Full Stack Developer' },
         { text: 'Web Designer' },
-        { text: 'AWS Full-Stack Engineer' }
+        { text: 'AWS Full-Stack Engineer' },
+        { text: 'WPF Developer' },
+        { text: 'C# Developer' }
     ];
 
     // Fisher-Yates Shuffle
     for (let i = messages.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [messages[i], messages[j]] = [messages[j], messages[i]]; // Swap
+        [messages[i], messages[j]] = [messages[j], messages[i]];
     }
 
+    // Prepare the sequence for react-type-animation
+    // It needs an array like: [text1, delay1, text2, delay2, ...]
+    const sequence = messages.flatMap(message => [
+        message.text,
+        1500 // Pause after typing each message
+    ]);
+
     return (
-        <ReactTypingEffect
-            text={messages.map((message) => message.text)}
-            speed={100}
-            eraseSpeed={50}
-            eraseDelay={1000}
-            typingDelay={1000}
-            cursor={'_'} />
+        <TypeAnimation
+            sequence={sequence}
+            wrapper="span" // Or 'div', 'p', etc. - the HTML element to wrap the text
+            speed={30} // Typing speed (lower is faster) - adjust to match desired feel
+            deletionSpeed={50} // Deletion speed (optional, defaults same as speed)
+            cursor={true} // Show cursor
+            repeat={Infinity} // Repeat the sequence indefinitely
+            style={{ fontSize: '1.5em', display: 'inline-block' }} // Optional styling
+        />
     );
 };

@@ -1,4 +1,4 @@
-// pages/Home.jsx
+// src/pages/Home.jsx
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { TypingEffect } from '../components/TypingEffect';
