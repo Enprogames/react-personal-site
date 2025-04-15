@@ -10,7 +10,9 @@
 
 Updating the site:
 1. Make sure you are on the main branch
-2. Run `npm run deploy -- -m "Your optional commit message"`
+2. Run `git commit -m "Your optional commit message"`
+3. Run `git push`
+    - The `deploy-gh-pages` action should automatically update the site with the pushed changes.
 
 ### Updating Dependencies (https://stackoverflow.com/a/16074029)
 1. Install npm-check-updates
