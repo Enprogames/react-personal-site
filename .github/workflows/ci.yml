@@ -1,0 +1,160 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_call:
+  workflow_dispatch:
+
+# Permissions needed for Pages preview deployments on PRs
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run tests
+        env:
+          CI: true
+        run: |
+          # --if-present avoids failure if no test script exists
+          npm test --if-present -- --watchAll=false
+
+      # - name: Code coverage (stub)
+      #   if: ${{ false }} # Enable later when coverage is set up
+      #   env:
+      #     CI: true
+      #   run: |
+      #     # Example: generate coverage report
+      #     npm test -- --coverage --watchAll=false
+      #     # Optionally upload coverage artifact or report to a service
+
+  vulnerability-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies (high severity or above)
+        run: |
+          # Fails the job if high (or critical) vulnerabilities are found
+          npm audit --audit-level=high
+
+  outdated-scan:
+    name: Outdated Package Scan
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate outdated report and summary
+        shell: bash
+        run: |
+          set -e
+          npm outdated --json > outdated.json || true
+          node - <<'NODE'
+          const fs = require('fs');
+          const sum = [];
+          sum.push('Outdated dependencies summary');
+          let data = {};
+          try { data = JSON.parse(fs.readFileSync('outdated.json','utf8')); } catch {}
+          const keys = Object.keys(data || {});
+          if (!keys.length) {
+            sum.push('No outdated dependencies found.');
+          } else {
+            keys.sort().forEach(k => {
+              const i = data[k] || {};
+              sum.push(`${k}: current ${i.current}, wanted ${i.wanted}, latest ${i.latest}`);
+            });
+          }
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, sum.join('\n'));
+          NODE
+
+      - name: Upload outdated report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-outdated-report
+          path: outdated.json
+          if-no-files-found: ignore
+
+  pr-preview-deploy:
+    name: PR Preview Deploy
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    needs: [build-and-test, vulnerability-scan, outdated-scan]
+    environment:
+      name: preview
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build'
+
+      - name: Deploy PR preview to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          preview: true
