@@ -56,6 +56,8 @@ jobs:
           path: './build'
 
   deploy:
+    # Only deploy when a new commit lands on main
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }} # Sets the deployment URL output
