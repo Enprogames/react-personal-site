@@ -1,13 +1,29 @@
-// components/common/ProjectPane.js
+// components/common/ProjectPane.tsx
+import React from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
-import { CodeBlock } from "react-code-blocks";
-import {
-  FaGithub,
-} from "react-icons/fa";
+import { CodeBlock } from 'react-code-blocks';
+import { FaGithub } from 'react-icons/fa';
 import './ProjectPane.css';
 
-export const ProjectPane = ({ title, description, keyPoints, technologies, image, elements, repositoryLink }) => {
+interface ProjectPaneProps {
+  title: string;
+  description?: string;
+  keyPoints?: string[];
+  technologies?: string[];
+  image?: string;
+  elements?: Array<{ type: string; content: any; language?: string; theme?: string }>;
+  repositoryLink?: string;
+}
 
+export const ProjectPane: React.FC<ProjectPaneProps> = ({
+  title,
+  description,
+  keyPoints,
+  technologies,
+  image,
+  elements,
+  repositoryLink,
+}) => {
   const id = encodeURIComponent(title.toLowerCase().replace(/ /g, '-'));
 
   return (
@@ -69,5 +85,6 @@ export const ProjectPane = ({ title, description, keyPoints, technologies, image
         </Row>
       </Card>
     </Container>
-  )
-}
+  );
+};
+

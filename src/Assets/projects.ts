@@ -1,16 +1,16 @@
-// Assets/projects.js
+// Assets/projects.ts
 
 // import all images from ./Assets/img/projects/**
-export const flashcardTool1 = require('./img/projects/flashcard-tool1.JPG');
-export const flashcardTool2 = require('./img/projects/flashcard-tool2.JPG');
-export const clock1 = require('./img/projects/clock1.JPG');
-export const musicPlayer1 = require('./img/projects/music-player1.JPG');
-export const sqlInjection1 = require('./img/projects/sql-injection1.JPG');
-export const sqlInjection2 = require('./img/projects/sql-injection2.JPG');
-export const tekku1 = require('./img/projects/tekku_title_page_small.jpeg');
-export const tekku2 = require('./img/projects/tekku_title_page_large.jpeg');
-export const bitcoin1 = require('./img/projects/bitcoin_history.jpg')
-export const bitcoin2 = require('./img/projects/bitcoin_paths.jpg')
+export const flashcardTool1: string = require('./img/projects/flashcard-tool1.JPG');
+export const flashcardTool2: string = require('./img/projects/flashcard-tool2.JPG');
+export const clock1: string = require('./img/projects/clock1.JPG');
+export const musicPlayer1: string = require('./img/projects/music-player1.JPG');
+export const sqlInjection1: string = require('./img/projects/sql-injection1.JPG');
+export const sqlInjection2: string = require('./img/projects/sql-injection2.JPG');
+export const tekku1: string = require('./img/projects/tekku_title_page_small.jpeg');
+export const tekku2: string = require('./img/projects/tekku_title_page_large.jpeg');
+export const bitcoin1: string = require('./img/projects/bitcoin_history.jpg');
+export const bitcoin2: string = require('./img/projects/bitcoin_paths.jpg');
 
 export const projects = [
     {

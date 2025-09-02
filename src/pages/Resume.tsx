@@ -1,11 +1,12 @@
+// pages/Resume.tsx
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Container, Row, Col, Card } from "react-bootstrap";
+import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { pdfjs, Document, Page } from 'react-pdf';
-import { AiOutlineDownload } from "react-icons/ai";
+import { AiOutlineDownload } from 'react-icons/ai';
 import resume_pdf from '../Assets/../Assets/resume.pdf';
 import './Resume.css';
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import "react-pdf/dist/esm/Page/TextLayer.css";
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 // Placed this configuration outsude this component function, at the top level of the module.
 // Could use the '.mjs' file for modern module support.
@@ -14,11 +15,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url, // Helps the bundler locate the worker relative to this file
 ).toString();
 
-const Resume = () => {
-
-    const [numPages, setNumPages] = useState(null);
-    const [, setWindowWidth] = useState(window.innerWidth);
-    const pdfContainerRef = useRef(null);
+const Resume: React.FC = () => {
+  const [numPages, setNumPages] = useState<number | null>(null);
+  const [, setWindowWidth] = useState<number>(window.innerWidth);
+  const pdfContainerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
       const handleWindowSize = () => {
@@ -33,8 +33,8 @@ const Resume = () => {
     }, []);
 
 
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
+    function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+      setNumPages(numPages);
     }
 
     // Adjust scale based on window width
@@ -67,14 +67,15 @@ const Resume = () => {
                   file={resume_pdf}
                   onLoadSuccess={onDocumentLoadSuccess}
                   className="d-flex align-items-center flex-column">
-                  {Array.from(new Array(numPages),
-                    (el, index) => (
-                      <Page
-                        key={`page_${index + 1}`}
-                        pageNumber={index + 1}
-                        scale={getScale()} />
-                    ),
-                  )}
+                  {Array.from(new Array(numPages || 0), (
+                    _el, index,
+                  ) => (
+                    <Page
+                      key={`page_${index + 1}`}
+                      pageNumber={index + 1}
+                      scale={getScale()}
+                    />
+                  ))}
                 </Document>
               </div>
             </Card.Body></Card>

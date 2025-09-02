@@ -1,4 +1,4 @@
-// src/App.js
+// src/App.tsx
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -20,8 +20,7 @@ import './App.css';
 
 
 function App() {
-
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState<string>('light');
 
   return (
     <>
