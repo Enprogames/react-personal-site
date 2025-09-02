@@ -5,8 +5,8 @@ import { pdfjs, Document, Page } from 'react-pdf';
 import { AiOutlineDownload } from 'react-icons/ai';
 import resume_pdf from '../Assets/resume.pdf';
 import './Resume.css';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 
 const DownloadIcon = AiOutlineDownload as React.FC<{ size?: number; className?: string }>;
 
