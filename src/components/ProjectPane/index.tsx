@@ -2,7 +2,7 @@
 import React from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { CodeBlock } from 'react-code-blocks';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub as FaGithubIcon } from 'react-icons/fa';
 import './ProjectPane.css';
 
 interface ProjectPaneProps {
@@ -14,6 +14,8 @@ interface ProjectPaneProps {
   elements?: Array<{ type: string; content: any; language?: string; theme?: string }>;
   repositoryLink?: string;
 }
+
+const FaGithub = FaGithubIcon as unknown as React.FC;
 
 export const ProjectPane: React.FC<ProjectPaneProps> = ({
   title,

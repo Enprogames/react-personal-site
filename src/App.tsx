@@ -30,12 +30,12 @@ function App() {
 
         <Container fluid className="mb-5">
           <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/Resume" element={<Resume />} />
-            <Route exact path="/Projects" element={<Projects />} />
-            <Route exact path="/Hobbies" element={<Hobbies />} />
-            <Route exact path="/Contact" element={<Contact />} />
-            <Route exact path="/about" element={<About />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/Resume" element={<Resume />} />
+            <Route path="/Projects" element={<Projects />} />
+            <Route path="/Hobbies" element={<Hobbies />} />
+            <Route path="/Contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>

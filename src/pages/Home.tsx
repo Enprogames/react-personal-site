@@ -2,9 +2,11 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { TypingEffect } from '../components/TypingEffect';
-import { FaCircle } from 'react-icons/fa';
+import { FaCircle as FaCircleIcon } from 'react-icons/fa';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../Assets/projects';
+
+const FaCircle = FaCircleIcon as unknown as React.FC;
 
 const Home: React.FC = () => {
   return (

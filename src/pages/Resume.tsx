@@ -2,11 +2,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { pdfjs, Document, Page } from 'react-pdf';
-import { AiOutlineDownload } from 'react-icons/ai';
-import resume_pdf from '../Assets/../Assets/resume.pdf';
+import { AiOutlineDownload as AiOutlineDownloadIcon } from 'react-icons/ai';
+import resume_pdf from '../Assets/resume.pdf';
 import './Resume.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+
+const AiOutlineDownload = AiOutlineDownloadIcon as unknown as React.FC<{ size?: number; className?: string }>;
 
 // Placed this configuration outsude this component function, at the top level of the module.
 // Could use the '.mjs' file for modern module support.

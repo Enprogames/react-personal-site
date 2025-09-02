@@ -2,28 +2,30 @@
 import React, { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import {
-  FaGithub,
-  FaTwitter,
-  FaFacebookF,
-  FaLinkedin,
-  FaYoutube,
-  FaTwitch,
+  FaGithub as FaGithubIcon,
+  FaTwitter as FaTwitterIcon,
+  FaFacebookF as FaFacebookFIcon,
+  FaLinkedin as FaLinkedinIcon,
+  FaYoutube as FaYoutubeIcon,
+  FaTwitch as FaTwitchIcon,
 } from 'react-icons/fa';
 import { socialprofiles } from '../../Assets/social_accounts';
 import { ThemeContext } from '../../ThemeContext';
 import './Socialicons.css';
 
+type SizedIcon = React.ComponentType<{ size: number }>;
+
+const icons: Record<string, SizedIcon> = {
+  twitter: FaTwitterIcon as unknown as SizedIcon,
+  github: FaGithubIcon as unknown as SizedIcon,
+  facebook: FaFacebookFIcon as unknown as SizedIcon,
+  linkedin: FaLinkedinIcon as unknown as SizedIcon,
+  youtube: FaYoutubeIcon as unknown as SizedIcon,
+  twitch: FaTwitchIcon as unknown as SizedIcon,
+};
+
 export const Socialicons: React.FC = () => {
   const { theme } = useContext(ThemeContext)!;
-
-  const icons: Record<string, React.ComponentType<{ size: number }>> = {
-    twitter: FaTwitter,
-    github: FaGithub,
-    facebook: FaFacebookF,
-    linkedin: FaLinkedin,
-    youtube: FaYoutube,
-    twitch: FaTwitch,
-  };
 
   return (
     <footer className="bg-tertiary">
