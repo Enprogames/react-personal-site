@@ -1,12 +1,14 @@
-// src/pages/Home.jsx
+// src/pages/Home.tsx
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { TypingEffect } from '../components/TypingEffect';
-import { FaCircle } from "react-icons/fa";
+import { FaCircle as FaCircleIcon } from 'react-icons/fa';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../Assets/projects';
 
-const Home = () => {
+const FaCircle = FaCircleIcon as unknown as React.FC;
+
+const Home: React.FC = () => {
   return (
     <div>
       <header className="hero bg-primary text-white text-center p-5">

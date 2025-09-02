@@ -1,9 +1,9 @@
-// src/components/TypingEffect/index.js
+// src/components/TypingEffect/index.tsx
 import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
-export const TypingEffect = () => {
-    const messages = [
+export const TypingEffect: React.FC = () => {
+    const messages: { text: string }[] = [
         { text: 'Web Developer' },
         { text: 'Backend Web Developer' },
         { text: 'Frontend Web Developer' },
@@ -30,7 +30,7 @@ export const TypingEffect = () => {
 
     // Prepare the sequence for react-type-animation
     // It needs an array like: [text1, delay1, text2, delay2, ...]
-    const sequence = messages.flatMap(message => [
+    const sequence = messages.flatMap((message) => [
         message.text,
         1500 // Pause after typing each message
     ]);
@@ -47,3 +47,4 @@ export const TypingEffect = () => {
         />
     );
 };
+

@@ -1,9 +1,9 @@
-// components/Footer/index.js
+// components/Footer/index.tsx
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Socialicons } from '../Socialicons';
 
-export const Footer = () => {
+export const Footer: React.FC = () => {
   const year = new Date().getFullYear();
   return (
     <footer className="d-flex justify-content-center text-center text-lg-start bg-body-tertiary">
@@ -27,3 +27,4 @@ export const Footer = () => {
     </footer>
   );
 };
+

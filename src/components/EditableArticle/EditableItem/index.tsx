@@ -1,9 +1,21 @@
-// components/EditableArticle/EditableItem/index.js
+// components/EditableArticle/EditableItem/index.tsx
 
 import React from 'react';
 import { Form } from 'react-bootstrap';
 
-export const EditableItem = ({ isEditing, item, onContentChange }) => (
+interface EditableItemProps {
+  isEditing: boolean;
+  item: { title: string; description: string };
+  onContentChange: (
+    field: string
+  ) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
+
+export const EditableItem: React.FC<EditableItemProps> = ({
+  isEditing,
+  item,
+  onContentChange,
+}) => (
   <div>
     {isEditing ? (
       <>
@@ -26,3 +38,4 @@ export const EditableItem = ({ isEditing, item, onContentChange }) => (
     )}
   </div>
 );
+

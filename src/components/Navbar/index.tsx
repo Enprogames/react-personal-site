@@ -1,10 +1,10 @@
-// components/Navbar/index.js
+// components/Navbar/index.tsx
 import React, { useState } from 'react';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-export const CustomNavbar = () => {
-  const [expanded, setExpanded] = useState(false);
+export const CustomNavbar: React.FC = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   const handleNavLinkClick = () => setExpanded(false);
 
@@ -38,3 +38,4 @@ export const CustomNavbar = () => {
     </Navbar>
   );
 };
+
