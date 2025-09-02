@@ -1,11 +1,13 @@
 // src/App.tsx
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Container from '@mui/material/Container';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import type { PaletteMode } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import { CustomNavbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { DarkModeToggle } from './components/toggledarkmode';
 import { ThemeContext } from './ThemeContext';
 
 import Home from './pages/Home';
@@ -20,12 +22,17 @@ import './App.css';
 
 
 function App() {
-  const [theme, setTheme] = useState<string>('light');
+  const [theme, setTheme] = useState<PaletteMode>('light');
+  const muiTheme = useMemo(() => createTheme({ palette: { mode: theme } }), [theme]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
 
   return (
-    <>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        <DarkModeToggle />
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
         <CustomNavbar />
 
         <Container maxWidth={false} className="mb-5">
@@ -40,8 +47,8 @@ function App() {
           </Routes>
         </Container>
         <Footer />
-      </ThemeContext.Provider>
-    </>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 
