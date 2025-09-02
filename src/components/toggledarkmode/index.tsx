@@ -1,5 +1,6 @@
 // components/toggledarkmode/index.tsx
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import IconButton from '@mui/material/IconButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import './darkModeToggle.css';
@@ -12,15 +13,18 @@ export const DarkModeToggle: React.FC = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-bs-theme', theme);
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
   return (
-    <button className={`dark-mode-toggle btn btn-lg ${theme === 'light' ? 'btn-outline-dark' : 'btn-outline-light'}`}
-        onClick={toggleTheme}>
+    <IconButton
+      className="dark-mode-toggle fixed top-4 right-4 border border-current"
+      onClick={toggleTheme}
+    >
       {theme === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
-    </button>
+    </IconButton>
   );
 };
 
+export default DarkModeToggle;

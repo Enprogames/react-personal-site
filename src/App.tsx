@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
+import Container from '@mui/material/Container';
 
 import { CustomNavbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -28,7 +28,7 @@ function App() {
         <DarkModeToggle />
         <CustomNavbar />
 
-        <Container fluid className="mb-5">
+        <Container maxWidth={false} className="mb-5">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Resume" element={<Resume />} />

@@ -1,6 +1,6 @@
-// components/common/ProjectPane.tsx
+// components/ProjectPane/index.tsx
 import React from 'react';
-import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { Container, Card, CardContent, Typography, Button, Box } from '@mui/material';
 import { CodeBlock } from 'react-code-blocks';
 import { FaGithub as FaGithubIcon } from 'react-icons/fa';
 import './ProjectPane.css';
@@ -15,8 +15,6 @@ interface ProjectPaneProps {
   repositoryLink?: string;
 }
 
-const FaGithub = FaGithubIcon as unknown as React.FC;
-
 export const ProjectPane: React.FC<ProjectPaneProps> = ({
   title,
   description,
@@ -27,66 +25,93 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
   repositoryLink,
 }) => {
   const id = encodeURIComponent(title.toLowerCase().replace(/ /g, '-'));
+  const FaGithub = FaGithubIcon as unknown as React.FC;
 
   return (
-    <Container id={id}>
-      <Card className="mb-3 p-3 shadow">
-        <Row>
-          <Col>
-            <Card.Title>
-              <h2>{title}</h2>
-            </Card.Title>
-
-            <Card.Body>
-              {/* If description field is provided, display it as a paragraph */}
-              {description && <p className="card-text">{description}</p>}
-              {/* If a keyPoints field is present, display it as a list */}
-              {keyPoints && <ul>
-                {keyPoints.map((point, index) => <li key={index}>{point}</li>)}
-              </ul>}
-              {/* If technologies field is present, show as a list and have heading "technologies*/}
-              {technologies && <p className="card-text">
-                <small className="text-muted">Technologies used:</small>
-                <ul>
-                  {technologies.map((tech, index) => <li key={index}>{tech}</li>)}
-                </ul>
-              </p>}
-              {/* If image field is present, display it */}
-              {image &&
-                <img
-                  src={image}
-                  alt={title}
-                  className="project-image shadow img-fluid mb-3 d-block" />}
-              {/* Loop through elements and display based on type */}
-              {elements && elements.map((element, index) => {
-                switch (element.type) {
-                  case 'image':
-                    return <img
+    <Container id={id} className="my-6">
+      <Card className="p-3 shadow">
+        <CardContent>
+          <Typography variant="h4" gutterBottom>{title}</Typography>
+          {description && <Typography paragraph>{description}</Typography>}
+          {keyPoints && (
+            <ul className="list-disc ml-6">
+              {keyPoints.map((point, index) => (
+                <li key={index}>{point}</li>
+              ))}
+            </ul>
+          )}
+          {technologies && (
+            <Typography variant="body2" className="mt-4">
+              <span className="font-semibold">Technologies used:</span>
+              <ul className="list-disc ml-6">
+                {technologies.map((tech, index) => (
+                  <li key={index}>{tech}</li>
+                ))}
+              </ul>
+            </Typography>
+          )}
+          {image && (
+            <img
+              src={image}
+              alt={title}
+              className="project-image shadow max-w-full h-auto mb-3 block"
+            />
+          )}
+          {elements &&
+            elements.map((element, index) => {
+              switch (element.type) {
+                case 'image':
+                  return (
+                    <img
                       key={index}
                       src={element.content}
                       alt={title}
-                      className="project-image shadow img-fluid d-block" />
-                  case 'points':
-                    return <ul key={index}>
-                      {element.content.map((point, i) => <li key={i}>{point}</li>)}
+                      className="project-image shadow max-w-full h-auto block"
+                    />
+                  );
+                case 'points':
+                  return (
+                    <ul key={index} className="list-disc ml-6">
+                      {element.content.map((point: string, i: number) => (
+                        <li key={i}>{point}</li>
+                      ))}
                     </ul>
-                  case 'paragraph':
-                    return <p key={index} className="card-text">{element.content}</p>
-                  case 'code':
-                    // Use element.language if code language is specified. Otherwise, show as plain text
-                    return <CodeBlock key={index} text={element.content} language={element.language || 'text'} showLineNumbers={false} theme={element.theme || 'dracula'} />
-                  default:
-                    return null;
-                }
-              })}
-              {repositoryLink && <Button variant="primary" href={repositoryLink} target="_blank">
-                <FaGithub />&nbsp; Repository
-              </Button>}
-            </Card.Body>
-          </Col>
-        </Row>
+                  );
+                case 'paragraph':
+                  return (
+                    <Typography key={index} paragraph>
+                      {element.content}
+                    </Typography>
+                  );
+                case 'code':
+                  return (
+                    <Box key={index} className="my-4">
+                      <CodeBlock
+                        text={element.content}
+                        language={element.language || 'text'}
+                        showLineNumbers={false}
+                        theme={element.theme || 'dracula'}
+                      />
+                    </Box>
+                  );
+                default:
+                  return null;
+              }
+            })}
+          {repositoryLink && (
+            <Button
+              variant="contained"
+              href={repositoryLink}
+              target="_blank"
+              startIcon={<FaGithub />}
+            >
+              Repository
+            </Button>
+          )}
+        </CardContent>
       </Card>
     </Container>
   );
 };
 
+export default ProjectPane;

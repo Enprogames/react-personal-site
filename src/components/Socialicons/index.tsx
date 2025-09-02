@@ -1,6 +1,6 @@
-// components/SocialIcons/index.tsx
+// components/Socialicons/index.tsx
 import React, { useContext } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import Box from '@mui/material/Box';
 import {
   FaGithub as FaGithubIcon,
   FaTwitter as FaTwitterIcon,
@@ -28,38 +28,30 @@ export const Socialicons: React.FC = () => {
   const { theme } = useContext(ThemeContext)!;
 
   return (
-    <footer className="bg-tertiary">
-      <Container className="p-4 text-center">
-        <Row>
-          <Col>
-            <ul className="list-inline">
-                {Object.entries(socialprofiles).map(([platform, url]) => {
-                  if (!url) return null;
-
-                  const IconComponent = icons[platform];
-                  if (!IconComponent) return null;
-
-                  return (
-                    <li className="list-inline-item mx-2" key={platform}>
-                      <a
-                        href={url}
-                        className={`${
-                          theme === 'light'
-                            ? 'text-dark text-dark-hover'
-                            : 'text-light text-light-hover'
-                        }`}
-                      >
-                        <IconComponent size={25} />
-                      </a>
-                    </li>
-                  );
-                })}
-            </ul>
-            <p className="text-muted">Follow Me</p>
-          </Col>
-        </Row>
-      </Container>
-    </footer>
+    <Box className="p-4 text-center">
+      <ul className="flex justify-center flex-wrap gap-4">
+        {Object.entries(socialprofiles).map(([platform, url]) => {
+          if (!url) return null;
+          const IconComponent = icons[platform];
+          if (!IconComponent) return null;
+          return (
+            <li key={platform}>
+              <a
+                href={url}
+                className={`${
+                  theme === 'light'
+                    ? 'text-gray-800 text-dark-hover'
+                    : 'text-gray-100 text-light-hover'
+                }`}
+              >
+                <IconComponent size={25} />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="text-gray-500">Follow Me</p>
+    </Box>
   );
 };
 

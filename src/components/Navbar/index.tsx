@@ -1,41 +1,76 @@
 // components/Navbar/index.tsx
-import React, { useState } from 'react';
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
 
-export const CustomNavbar: React.FC = () => {
-  const [expanded, setExpanded] = useState<boolean>(false);
+const pages = [
+  { label: 'Home', to: '/' },
+  { label: 'Resume', to: '/Resume' },
+  { label: 'Projects', to: '/Projects' },
+  { label: 'Hobbies', to: '/Hobbies' },
+  { label: 'About', to: '/About' },
+];
 
-  const handleNavLinkClick = () => setExpanded(false);
+export const CustomNavbar: React.FC = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" fixed="top" expanded={expanded}>
+    <AppBar position="fixed" color="primary">
       <Container>
-        <Navbar.Brand as={NavLink} to="/" onClick={handleNavLinkClick}>
-          Ethan Posner
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded((prev) => !prev)} />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/" onClick={handleNavLinkClick}>
-              Home
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/Resume" onClick={handleNavLinkClick}>
-              Resume
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/Projects" onClick={handleNavLinkClick}>
-              Projects
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/Hobbies" onClick={handleNavLinkClick}>
-              Hobbies
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/About" onClick={handleNavLinkClick}>
-              About
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            component={NavLink}
+            to="/"
+            sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
+          >
+            Ethan Posner
+          </Typography>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.to}
+                component={NavLink}
+                to={page.to}
+                color="inherit"
+                sx={{ my: 2 }}
+              >
+                {page.label}
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton color="inherit" onClick={handleOpen}>
+              <MenuIcon />
+            </IconButton>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+              {pages.map((page) => (
+                <MenuItem
+                  key={page.to}
+                  component={NavLink}
+                  to={page.to}
+                  onClick={handleClose}
+                >
+                  {page.label}
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
       </Container>
-    </Navbar>
+    </AppBar>
   );
 };
 
+export default CustomNavbar;
