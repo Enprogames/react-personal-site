@@ -41,7 +41,7 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
             </ul>
           )}
           {technologies && (
-            <Typography variant="body2" className="mt-4">
+            <Typography variant="body2" component="div" className="mt-4">
               <span className="font-semibold">Technologies used:</span>
               <ul className="list-disc ml-6">
                 {technologies.map((tech, index) => (
