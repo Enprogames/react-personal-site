@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -28,6 +29,7 @@ jobs:
         with:
           name: github-pages
           run-id: ${{ github.event.workflow_run.id }}
+          repository: ${{ github.repository }}
 
       - name: Re-upload artifact in this run
         uses: actions/upload-pages-artifact@v3
