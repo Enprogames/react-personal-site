@@ -39,7 +39,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node_modules
-          path: node_modules
+          path: .
       - name: Check for outdated dependencies
         continue-on-error: true
         run: |
@@ -63,7 +63,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node_modules
-          path: node_modules
+          path: .
       - name: Run security audit
         continue-on-error: true
         run: npm audit
@@ -82,7 +82,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node_modules
-          path: node_modules
+          path: .
       - name: Run tests
         run: npm test
 
@@ -100,7 +100,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node_modules
-          path: node_modules
+          path: .
       - name: Build project
         run: npm run build
       - name: Setup Pages
