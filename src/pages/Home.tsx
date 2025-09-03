@@ -10,18 +10,25 @@ const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];
 const Home: React.FC = () => {
   return (
     <div>
-      <header className="bg-slate-700 dark:bg-slate-800 text-white text-center py-16">
-        <Container>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Welcome to My Portfolio
+      <section className="relative">
+        <img
+          src="/banner-placeholder.svg"
+          alt="banner"
+          className="w-full h-80 sm:h-96 md:h-[500px] object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center px-4">
+          <Typography variant="h3" component="h1" className="mb-4">
+            Ethan Posner
           </Typography>
           <TypingEffect />
-        </Container>
-      </header>
+        </div>
+      </section>
 
-      <section className="mt-10">
+      <section className="py-16">
         <Container>
-          <Typography variant="h4" align="center" gutterBottom>About Me</Typography>
+          <Typography variant="h4" align="center" gutterBottom>
+            About Me
+          </Typography>
           <Typography>
             I am a full-stack developer with a passion for learning. I have experience in building web applications using React,
             and Python. I am also familiar with AWS and have experience in deploying applications to the cloud. I am always
@@ -30,9 +37,11 @@ const Home: React.FC = () => {
         </Container>
       </section>
 
-      <section className="mt-10">
+      <section className="py-16 bg-gray-50 dark:bg-slate-800">
         <Container>
-          <Typography variant="h4" align="center" gutterBottom>Skills</Typography>
+          <Typography variant="h4" align="center" gutterBottom>
+            Skills
+          </Typography>
           <div className="flex flex-wrap justify-center gap-2 mb-4">
             {skills.map((skill) => (
               <Chip key={skill} label={skill} color="primary" variant="outlined" />
@@ -41,9 +50,11 @@ const Home: React.FC = () => {
         </Container>
       </section>
 
-      <section className="mt-10">
+      <section className="py-16">
         <Container>
-          <Typography variant="h4" align="center" gutterBottom>Portfolio</Typography>
+          <Typography variant="h4" align="center" gutterBottom>
+            Portfolio
+          </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {projects.map((project, index) => (
               <div key={index}>

@@ -26,14 +26,28 @@ export const CustomNavbar: React.FC = () => {
   const handleClose = () => setAnchorEl(null);
 
   return (
-    <AppBar position="fixed" color="primary">
+    <AppBar
+      position="fixed"
+      color="transparent"
+      elevation={0}
+      sx={{
+        backgroundImage: 'linear-gradient(to right, #0f172a, #1e293b)',
+        color: 'white',
+      }}
+    >
       <Container>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             component={NavLink}
             to="/"
-            sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
+            sx={{
+              flexGrow: 1,
+              textDecoration: 'none',
+              color: 'inherit',
+              fontWeight: 'bold',
+              letterSpacing: 1,
+            }}
           >
             Ethan Posner
           </Typography>
@@ -44,7 +58,13 @@ export const CustomNavbar: React.FC = () => {
                 component={NavLink}
                 to={page.to}
                 color="inherit"
-                sx={{ my: 2 }}
+                sx={{
+                  my: 2,
+                  mx: 1,
+                  '&.active': {
+                    borderBottom: '2px solid currentColor',
+                  },
+                }}
               >
                 {page.label}
               </Button>
@@ -61,6 +81,7 @@ export const CustomNavbar: React.FC = () => {
                   component={NavLink}
                   to={page.to}
                   onClick={handleClose}
+                  sx={{ '&.active': { fontWeight: 'bold' } }}
                 >
                   {page.label}
                 </MenuItem>
