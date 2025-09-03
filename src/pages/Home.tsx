@@ -37,14 +37,14 @@ const Home: React.FC = () => {
         </Container>
       </section>
 
-      <section className="py-16 bg-gray-50 dark:bg-slate-800">
+      <section className="py-16 bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-gray-100">
         <Container>
-          <Typography variant="h4" align="center" gutterBottom>
+          <Typography variant="h4" align="center" gutterBottom color="inherit">
             Skills
           </Typography>
           <div className="flex flex-wrap justify-center gap-2 mb-4">
             {skills.map((skill) => (
-              <Chip key={skill} label={skill} color="primary" variant="outlined" />
+              <Chip key={skill} label={skill} color="secondary" />
             ))}
           </div>
         </Container>
