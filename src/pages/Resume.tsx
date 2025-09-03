@@ -43,7 +43,7 @@ const Resume: React.FC = () => {
   };
 
   return (
-    <Container maxWidth={false} className="py-5">
+    <Container maxWidth={false} className="py-6">
       <div className="flex justify-center mb-5">
         <Button
           variant="contained"
@@ -57,7 +57,7 @@ const Resume: React.FC = () => {
       <div className="flex justify-center">
         <div className="w-full md:w-10/12">
           <Card className="shadow">
-            <CardContent className="pdf-container">
+            <CardContent className="pdf-container space-y-4">
               <div ref={pdfContainerRef} className="flex justify-center">
                 <Document
                   file={resume_pdf}

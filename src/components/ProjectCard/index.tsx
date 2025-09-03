@@ -23,7 +23,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imgSrc })
     >
       <Card className="shadow-md h-full transition-transform hover:-translate-y-1 cursor-pointer">
         <CardMedia component="img" image={imgSrc} alt={title} />
-        <CardContent className="flex flex-col flex-grow">
+        <CardContent className="flex flex-col flex-grow space-y-2">
           <Typography variant="h6">{title}</Typography>
           {description && (
             <Typography variant="body2">

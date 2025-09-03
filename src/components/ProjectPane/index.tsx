@@ -29,21 +29,21 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
 
   return (
     <Container id={id} className="my-6">
-      <Card className="p-3 shadow">
-        <CardContent>
+      <Card className="shadow">
+        <CardContent className="space-y-4">
           <Typography variant="h4" gutterBottom>{title}</Typography>
           {description && <Typography paragraph>{description}</Typography>}
           {keyPoints && (
-            <ul className="list-disc ml-6">
+            <ul className="list-disc ml-6 space-y-1">
               {keyPoints.map((point, index) => (
                 <li key={index}>{point}</li>
               ))}
             </ul>
           )}
           {technologies && (
-            <Typography variant="body2" component="div" className="mt-4">
+            <Typography variant="body2" component="div" className="space-y-2">
               <span className="font-semibold">Technologies used:</span>
-              <ul className="list-disc ml-6">
+              <ul className="list-disc ml-6 space-y-1">
                 {technologies.map((tech, index) => (
                   <li key={index}>{tech}</li>
                 ))}
@@ -71,7 +71,7 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
                   );
                 case 'points':
                   return (
-                    <ul key={index} className="list-disc ml-6">
+                    <ul key={index} className="list-disc ml-6 space-y-1">
                       {element.content.map((point: string, i: number) => (
                         <li key={i}>{point}</li>
                       ))}
