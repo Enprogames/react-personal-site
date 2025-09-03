@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CustomNavbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ThemeContext } from './ThemeContext';
+import { DarkModeToggle } from './components/toggledarkmode';
 
 import Home from './pages/Home';
 import Resume from './pages/Resume';
@@ -47,6 +48,7 @@ function App() {
           </Routes>
         </Container>
         <Footer />
+        <DarkModeToggle />
       </ThemeProvider>
     </ThemeContext.Provider>
   );

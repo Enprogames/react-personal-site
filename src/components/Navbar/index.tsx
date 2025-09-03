@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
-import { DarkModeToggle } from '../toggledarkmode';
 
 const pages = [
   { label: 'Home', to: '/' },
@@ -68,7 +67,6 @@ export const CustomNavbar: React.FC = () => {
               ))}
             </Menu>
           </Box>
-          <DarkModeToggle />
         </Toolbar>
       </Container>
     </AppBar>

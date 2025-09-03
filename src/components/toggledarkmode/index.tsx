@@ -1,6 +1,6 @@
 // components/toggledarkmode/index.tsx
 import React, { useContext } from 'react';
-import IconButton from '@mui/material/IconButton';
+import Fab from '@mui/material/Fab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { ThemeContext } from '../../ThemeContext';
@@ -13,13 +13,13 @@ export const DarkModeToggle: React.FC = () => {
   };
 
   return (
-    <IconButton color="inherit" onClick={toggleTheme} sx={{ ml: 1 }}>
-      {theme === 'light' ? (
-        <FontAwesomeIcon icon={faMoon} />
-      ) : (
-        <FontAwesomeIcon icon={faSun} />
-      )}
-    </IconButton>
+    <Fab
+      color="primary"
+      onClick={toggleTheme}
+      sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: (t) => t.zIndex.tooltip }}
+    >
+      {theme === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
+    </Fab>
   );
 };
 
