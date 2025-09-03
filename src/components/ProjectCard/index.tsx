@@ -1,6 +1,6 @@
 // components/ProjectCard/index.tsx
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import { HashLink } from 'react-router-hash-link';
 import './ProjectCard.css';
 
@@ -19,20 +19,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imgSrc })
         const yOffset = -60; // Adjust this value based on your navbar's height
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
       }}
-      className="text-decoration-none"
+      className="no-underline"
     >
-      <Card className="shadow h-100 card-lift" style={{ cursor: 'pointer' }}>
-        <Card.Img variant="top" src={imgSrc} />
-        <Card.Body className="d-flex flex-column">
-          <Card.Title>{title}</Card.Title>
+      <Card className="shadow-md h-full transition-transform hover:-translate-y-1 cursor-pointer">
+        <CardMedia component="img" image={imgSrc} alt={title} />
+        <CardContent className="flex flex-col flex-grow space-y-2">
+          <Typography variant="h6">{title}</Typography>
           {description && (
-            <Card.Text>
+            <Typography variant="body2">
               {description.length > 300
                 ? description.substring(0, 300) + '...'
                 : description}
-            </Card.Text>
+            </Typography>
           )}
-        </Card.Body>
+        </CardContent>
       </Card>
     </HashLink>
   );

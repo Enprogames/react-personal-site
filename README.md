@@ -10,13 +10,13 @@ My portfolio website, created using [React.js](https://react.dev/).
 ### Setup and Run Locally
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Run the app: `npm start`
+3. Run the app: `npm run dev`
 
 Updating the site:
 1. Make sure you are on the main branch
 2. Run `git commit -m "Your optional commit message"`
 3. Run `git push`
-    - The `deploy-gh-pages` action should automatically update the site with the pushed changes.
+    - The `deploy` workflow will automatically publish the site after a successful build.
 
 ### Updating Dependencies (https://stackoverflow.com/a/16074029)
 1. Install npm-check-updates

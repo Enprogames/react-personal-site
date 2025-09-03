@@ -1,7 +1,6 @@
 // components/EditableArticle/EditableItem/index.tsx
-
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import TextField from '@mui/material/TextField';
 
 interface EditableItemProps {
   isEditing: boolean;
@@ -19,15 +18,18 @@ export const EditableItem: React.FC<EditableItemProps> = ({
   <div>
     {isEditing ? (
       <>
-        <Form.Control
-          type="text"
+        <TextField
+          fullWidth
           value={item.title}
           onChange={onContentChange('title')}
+          margin="normal"
         />
-        <Form.Control
-          as="textarea"
+        <TextField
+          fullWidth
+          multiline
           value={item.description}
           onChange={onContentChange('description')}
+          margin="normal"
         />
       </>
     ) : (
@@ -39,3 +41,4 @@ export const EditableItem: React.FC<EditableItemProps> = ({
   </div>
 );
 
+export default EditableItem;

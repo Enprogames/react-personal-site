@@ -1,65 +1,62 @@
 // src/pages/Home.tsx
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
-import { FaCircle as FaCircleIcon } from 'react-icons/fa';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../Assets/projects';
 
-const FaCircle = FaCircleIcon as unknown as React.FC;
+const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];
 
 const Home: React.FC = () => {
   return (
     <div>
-      <header className="hero bg-primary text-white text-center p-5">
+      <header className="bg-slate-700 dark:bg-slate-800 text-white text-center py-16">
         <Container>
-          <h1>Welcome to My Portfolio</h1>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Welcome to My Portfolio
+          </Typography>
           <TypingEffect />
         </Container>
       </header>
 
-      <section className="about mt-5">
+      <section className="mt-10">
         <Container>
-          <h2 className="text-center mb-4">About Me</h2>
-          <p>
-            I am a full-stack developer with a passion for learning. I have experience in building web applications using React, and Python. I am also familiar with AWS and have experience in deploying applications to the cloud. I am always looking for opportunities to learn and grow as a developer.
-          </p>
+          <Typography variant="h4" align="center" gutterBottom>About Me</Typography>
+          <Typography>
+            I am a full-stack developer with a passion for learning. I have experience in building web applications using React,
+            and Python. I am also familiar with AWS and have experience in deploying applications to the cloud. I am always
+            looking for opportunities to learn and grow as a developer.
+          </Typography>
         </Container>
       </section>
 
-      <section className="skills mt-5">
-      <Container>
-          <h2 className="text-center mb-4">Skills</h2>
-          <Row className="text-center mb-4">
-            <Col sm={4}><FaCircle /> React</Col>
-            <Col sm={4}><FaCircle /> Node.js</Col>
-            <Col sm={4}><FaCircle /> Python</Col>
-          </Row>
-          <Row className="text-center mb-4">
-            <Col sm={4}><FaCircle /> AWS</Col>
-            <Col sm={4}><FaCircle /> Django</Col>
-            <Col sm={4}><FaCircle /> C++</Col>
-          </Row>
+      <section className="mt-10">
+        <Container>
+          <Typography variant="h4" align="center" gutterBottom>Skills</Typography>
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {skills.map((skill) => (
+              <Chip key={skill} label={skill} color="primary" variant="outlined" />
+            ))}
+          </div>
         </Container>
       </section>
 
-      <section className="portfolio mt-5">
+      <section className="mt-10">
         <Container>
-          <h2 className="text-center mb-4">Portfolio</h2>
-          <Row>
+          <Typography variant="h4" align="center" gutterBottom>Portfolio</Typography>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {projects.map((project, index) => (
-              <Col sm={4} key={index}>
+              <div key={index}>
                 <ProjectCard
                   title={project.title}
                   description={project.description}
                   imgSrc={project.thumbnail}
                 />
-              </Col>
+              </div>
             ))}
-          </Row>
+          </div>
         </Container>
       </section>
-
     </div>
   );
 };

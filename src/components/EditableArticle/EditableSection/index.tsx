@@ -1,7 +1,6 @@
 // components/EditableArticle/EditableSection/index.tsx
-
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import TextField from '@mui/material/TextField';
 import { EditableItem } from '../EditableItem';
 
 interface EditableSectionProps {
@@ -21,10 +20,11 @@ export const EditableSection: React.FC<EditableSectionProps> = ({
 }) => (
   <div>
     {isEditing ? (
-      <Form.Control
-        type="text"
+      <TextField
+        fullWidth
         value={section.title}
         onChange={(event) => onContentChange(null, 'title', event)}
+        margin="normal"
       />
     ) : (
       <h2>{section.title}</h2>
@@ -40,3 +40,4 @@ export const EditableSection: React.FC<EditableSectionProps> = ({
   </div>
 );
 
+export default EditableSection;

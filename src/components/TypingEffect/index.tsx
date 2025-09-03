@@ -43,7 +43,7 @@ export const TypingEffect: React.FC = () => {
             deletionSpeed={50} // Deletion speed (optional, defaults same as speed)
             cursor={true} // Show cursor
             repeat={Infinity} // Repeat the sequence indefinitely
-            style={{ fontSize: '1.5em', display: 'inline-block' }} // Optional styling
+            style={{ fontSize: '1.25em', display: 'inline-block' }} // Optional styling
         />
     );
 };

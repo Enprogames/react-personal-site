@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Alert } from 'react-bootstrap';
+import { Button, Container, Alert, Box } from '@mui/material';
 import { EditableSection } from './EditableSection';
 
 interface EditableArticleProps {
@@ -27,11 +27,21 @@ export const EditableArticle: React.FC<EditableArticleProps> = ({
   error,
 }) => (
   <Container>
-    <Button onClick={() => setIsEditing(!isEditing)}>
-      {isEditing ? 'Cancel' : 'Edit'}
-    </Button>
-    {isEditing && <Button onClick={handleSave}>Save</Button>}
-    {isEditing && <Button onClick={addSection}>Add Section</Button>}
+    <Box className="my-4">
+      <Button variant="contained" onClick={() => setIsEditing(!isEditing)}>
+        {isEditing ? 'Cancel' : 'Edit'}
+      </Button>
+      {isEditing && (
+        <>
+          <Button variant="contained" onClick={handleSave} className="ml-2">
+            Save
+          </Button>
+          <Button variant="outlined" onClick={addSection} className="ml-2">
+            Add Section
+          </Button>
+        </>
+      )}
+    </Box>
     {content.map((section, sectionIndex) => (
       <EditableSection
         key={sectionIndex}
@@ -42,7 +52,8 @@ export const EditableArticle: React.FC<EditableArticleProps> = ({
         }
       />
     ))}
-    {error && <Alert variant="danger">{error}</Alert>}
+    {error && <Alert severity="error">{error}</Alert>}
   </Container>
 );
 
+export default EditableArticle;

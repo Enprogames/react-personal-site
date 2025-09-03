@@ -1,6 +1,6 @@
-// components/SocialIcons/index.tsx
-import React, { useContext } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+// components/Socialicons/index.tsx
+import React from 'react';
+import { Box, Link, Typography } from '@mui/material';
 import {
   FaGithub as FaGithubIcon,
   FaTwitter as FaTwitterIcon,
@@ -10,8 +10,7 @@ import {
   FaTwitch as FaTwitchIcon,
 } from 'react-icons/fa';
 import { socialprofiles } from '../../Assets/social_accounts';
-import { ThemeContext } from '../../ThemeContext';
-import './Socialicons.css';
+import { useColorModeValue } from '../../hooks/useColorModeValue';
 
 type SizedIcon = React.ComponentType<{ size: number }>;
 
@@ -25,41 +24,35 @@ const icons: Record<string, SizedIcon> = {
 };
 
 export const Socialicons: React.FC = () => {
-  const { theme } = useContext(ThemeContext)!;
+  const hoverColor = useColorModeValue('grey.800', 'grey.100');
 
   return (
-    <footer className="bg-tertiary">
-      <Container className="p-4 text-center">
-        <Row>
-          <Col>
-            <ul className="list-inline">
-                {Object.entries(socialprofiles).map(([platform, url]) => {
-                  if (!url) return null;
-
-                  const IconComponent = icons[platform];
-                  if (!IconComponent) return null;
-
-                  return (
-                    <li className="list-inline-item mx-2" key={platform}>
-                      <a
-                        href={url}
-                        className={`${
-                          theme === 'light'
-                            ? 'text-dark text-dark-hover'
-                            : 'text-light text-light-hover'
-                        }`}
-                      >
-                        <IconComponent size={25} />
-                      </a>
-                    </li>
-                  );
-                })}
-            </ul>
-            <p className="text-muted">Follow Me</p>
-          </Col>
-        </Row>
-      </Container>
-    </footer>
+    <Box className="p-4 text-center">
+      <ul className="flex justify-center flex-wrap gap-4">
+        {Object.entries(socialprofiles).map(([platform, url]) => {
+          if (!url) return null;
+          const IconComponent = icons[platform];
+          if (!IconComponent) return null;
+          return (
+            <li key={platform}>
+              <Link
+                href={url}
+                sx={{
+                  color: 'text.primary',
+                  '&:hover': { color: hoverColor },
+                  display: 'inline-flex',
+                }}
+              >
+                <IconComponent size={25} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+      <Typography variant="body2" color="text.secondary">
+        Follow Me
+      </Typography>
+    </Box>
   );
 };
 
