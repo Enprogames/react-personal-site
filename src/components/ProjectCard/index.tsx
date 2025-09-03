@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imgSrc })
       }}
       className="no-underline"
     >
-      <Card className="shadow-md h-full transition-transform hover:-translate-y-1 cursor-pointer">
+      <Card className="shadow-md h-full transition-transform hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
         <CardMedia component="img" image={imgSrc} alt={title} />
         <CardContent className="flex flex-col flex-grow space-y-2">
           <Typography variant="h6">{title}</Typography>
