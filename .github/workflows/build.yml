@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  install:
+  check_outdated_dependencies:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,29 +17,9 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: npm ci
-      - name: Upload node_modules
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          path: node_modules
-
-  check_outdated_dependencies:
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
       - name: Check for outdated dependencies
         continue-on-error: true
         run: |
@@ -50,7 +30,6 @@ jobs:
           fi
 
   audit:
-    needs: install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -59,17 +38,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
       - name: Run security audit
         continue-on-error: true
         run: npm audit
 
   test:
-    needs: install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -78,16 +55,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
       - name: Run tests
         run: npm test
 
   build:
-    needs: install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -96,11 +71,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
       - name: Build project
         run: npm run build
       - name: Setup Pages
