@@ -14,7 +14,6 @@ import { DarkModeToggle } from './components/toggledarkmode';
 import Home from './pages/Home';
 import Resume from './pages/Resume';
 import Projects from './pages/Projects';
-import Hobbies from './pages/Hobbies';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
@@ -41,9 +40,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/Resume" element={<Resume />} />
             <Route path="/Projects" element={<Projects />} />
-            <Route path="/Hobbies" element={<Hobbies />} />
             <Route path="/Contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/About" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
