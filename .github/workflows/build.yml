@@ -68,7 +68,7 @@ jobs:
         continue-on-error: true
         run: npm audit
 
-  build:
+  test:
     needs: install
     runs-on: ubuntu-latest
     steps:
@@ -85,6 +85,22 @@ jobs:
           path: node_modules
       - name: Run tests
         run: npm test
+
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
       - name: Build project
         run: npm run build
       - name: Setup Pages
