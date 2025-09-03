@@ -1,6 +1,6 @@
 // components/Socialicons/index.tsx
-import React, { useContext } from 'react';
-import Box from '@mui/material/Box';
+import React from 'react';
+import { Box, Link, Typography } from '@mui/material';
 import {
   FaGithub as FaGithubIcon,
   FaTwitter as FaTwitterIcon,
@@ -10,8 +10,7 @@ import {
   FaTwitch as FaTwitchIcon,
 } from 'react-icons/fa';
 import { socialprofiles } from '../../Assets/social_accounts';
-import { ThemeContext } from '../../ThemeContext';
-import './Socialicons.css';
+import { useColorModeValue } from '../../hooks/useColorModeValue';
 
 type SizedIcon = React.ComponentType<{ size: number }>;
 
@@ -25,7 +24,7 @@ const icons: Record<string, SizedIcon> = {
 };
 
 export const Socialicons: React.FC = () => {
-  const { theme } = useContext(ThemeContext)!;
+  const hoverColor = useColorModeValue('grey.800', 'grey.100');
 
   return (
     <Box className="p-4 text-center">
@@ -36,21 +35,23 @@ export const Socialicons: React.FC = () => {
           if (!IconComponent) return null;
           return (
             <li key={platform}>
-              <a
+              <Link
                 href={url}
-                className={`${
-                  theme === 'light'
-                    ? 'text-gray-800 text-dark-hover'
-                    : 'text-gray-100 text-light-hover'
-                }`}
+                sx={{
+                  color: 'text.primary',
+                  '&:hover': { color: hoverColor },
+                  display: 'inline-flex',
+                }}
               >
                 <IconComponent size={25} />
-              </a>
+              </Link>
             </li>
           );
         })}
       </ul>
-      <p className="text-gray-500">Follow Me</p>
+      <Typography variant="body2" color="text.secondary">
+        Follow Me
+      </Typography>
     </Box>
   );
 };
