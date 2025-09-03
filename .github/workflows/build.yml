@@ -77,9 +77,8 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: './dist'
+          name: pages
+          path: ./dist

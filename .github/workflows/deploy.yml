@@ -27,14 +27,15 @@ jobs:
       - name: Download Pages artifact from build
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: pages
           run-id: ${{ github.event.workflow_run.id }}
           repository: ${{ github.repository }}
+          path: ./dist
 
       - name: Re-upload artifact in this run
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./github-pages
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
