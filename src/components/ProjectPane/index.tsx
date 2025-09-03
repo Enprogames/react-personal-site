@@ -32,9 +32,9 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
       <Card className="shadow">
         <CardContent className="space-y-4">
           <Typography variant="h4" gutterBottom>{title}</Typography>
-          {description && <Typography paragraph>{description}</Typography>}
+          {description && <Typography>{description}</Typography>}
           {keyPoints && (
-            <ul className="list-disc ml-6 space-y-1">
+            <ul className="list-disc ml-6 space-y-3">
               {keyPoints.map((point, index) => (
                 <li key={index}>{point}</li>
               ))}
@@ -43,7 +43,7 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
           {technologies && (
             <Typography variant="body2" component="div" className="space-y-2">
               <span className="font-semibold">Technologies used:</span>
-              <ul className="list-disc ml-6 space-y-1">
+              <ul className="list-disc ml-6 space-y-2">
                 {technologies.map((tech, index) => (
                   <li key={index}>{tech}</li>
                 ))}
@@ -79,7 +79,7 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
                   );
                 case 'paragraph':
                   return (
-                    <Typography key={index} paragraph>
+                    <Typography key={index}>
                       {element.content}
                     </Typography>
                   );
