@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   check_outdated_dependencies:
     runs-on: ubuntu-latest
@@ -20,14 +25,49 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: npm ci
-      - name: Check for outdated dependencies
+      - name: Check for outdated dependencies (summary + warnings)
         continue-on-error: true
         run: |
-          if [ -n "$(npm outdated --json)" ]; then
-            echo "Dependencies are outdated. Run npm update."
-            npm outdated
-            exit 1
-          fi
+          set -e
+          OUT=$(npm outdated --json || true)
+          echo "${OUT:-{}}" > outdated.json
+          node -e "
+            const fs=require('fs');
+            const path=process.env.GITHUB_STEP_SUMMARY;
+            const raw=fs.readFileSync('outdated.json','utf8')||'{}';
+            const o=raw.trim()?JSON.parse(raw):{};
+            if (!Object.keys(o).length) {
+              console.log('All dependencies up to date.');
+              fs.appendFileSync(path, 'All dependencies up to date.\\n');
+              process.exit(0);
+            }
+            const rows = Object.entries(o).map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`).join('\\n');
+            const md = `### Outdated dependencies\\n| Package | Current | Wanted | Latest | Type |\\n|---|---:|---:|---:|---|\\n${rows}\\n`;
+            console.log(md);
+            fs.appendFileSync(path, md);
+            for (const [n,v] of Object.entries(o)) {
+              console.log(`::warning title=Outdated dependency::${n} ${v.current} → wanted ${v.wanted}, latest ${v.latest}`);
+            }
+          "
+      - name: Comment on PR with outdated table
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('outdated.json','utf8');
+            const o = body.trim()?JSON.parse(body):{};
+            if (!Object.keys(o).length) return;
+            const rows = Object.entries(o).map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`).join('\n');
+            const md = `### Outdated dependencies\n| Package | Current | Wanted | Latest | Type |\n|---|---:|---:|---:|---|\n${rows}\n`;
+            const {owner, repo, number} = context.issue;
+            const existing = await github.rest.issues.listComments({owner, repo, issue_number: number});
+            const prev = existing.data.find(c => c.user?.type === 'Bot' && c.body?.startsWith('### Outdated dependencies'));
+            if (prev) {
+              await github.rest.issues.updateComment({owner, repo, comment_id: prev.id, body: md});
+            } else {
+              await github.rest.issues.createComment({owner, repo, issue_number: number, body: md});
+            }
 
   audit:
     runs-on: ubuntu-latest

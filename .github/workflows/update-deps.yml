@@ -1,0 +1,49 @@
+name: "Update Dependencies"
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"  # Mondays @ 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Update versions with npm-check-updates
+        run: npx npm-check-updates -u
+
+      - name: Install updated deps
+        run: npm install
+
+      - name: Run audit fix (best-effort)
+        run: npm audit fix || true
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(deps): update dependencies"
+          title: "chore(deps): update dependencies"
+          branch: chore/update-deps
+          body: |
+            Automated dependency updates using npm-check-updates and npm audit fix.
+            - Ran `npx npm-check-updates -u`
+            - Ran `npm install`
+            - Ran `npm audit fix` (best-effort)
+
