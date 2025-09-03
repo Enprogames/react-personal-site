@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  deps:
+  install:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,8 +19,14 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Upload node_modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
   check_outdated_dependencies:
+    needs: install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,9 +35,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
       - name: Check for outdated dependencies
         continue-on-error: true
         run: |
@@ -41,8 +49,8 @@ jobs:
             exit 1
           fi
 
-  build:
-    needs: deps
+  audit:
+    needs: install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -51,9 +59,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+      - name: Run security audit
+        continue-on-error: true
+        run: npm audit
+
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
       - name: Run tests
         run: npm test
       - name: Build project
