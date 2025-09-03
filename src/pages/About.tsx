@@ -5,12 +5,18 @@ import { aboutContent } from '../Assets/about';
 
 const About: React.FC = () => {
   const [markdown, setMarkdown] = useState<string>('');
+  const [profileUrl, setProfileUrl] = useState<string>('');
 
   useEffect(() => {
     fetch(aboutContent.markdownUrl)
       .then((res) => res.text())
-      .then(setMarkdown)
+      .then((text) => setMarkdown(text.replace(/<!--[\s\S]*?-->/g, '')))
       .catch((err) => console.error('Failed to load about markdown', err));
+
+    fetch(`https://api.github.com/users/${aboutContent.githubUsername}`)
+      .then((res) => res.json())
+      .then((data) => setProfileUrl(data.avatar_url))
+      .catch((err) => console.error('Failed to load profile image', err));
   }, []);
 
   return (
@@ -19,7 +25,7 @@ const About: React.FC = () => {
         <CardContent>
           <div className="flex flex-col items-center mb-4">
             <Avatar
-              src={aboutContent.profileImageUrl}
+              src={profileUrl}
               alt="Profile"
               sx={{ width: 120, height: 120 }}
               className="mb-4"
@@ -30,11 +36,11 @@ const About: React.FC = () => {
           </div>
           <ReactMarkdown
             components={{
-              h1: ({node, ...props}) => <Typography variant="h4" gutterBottom {...props} />,
-              h2: ({node, ...props}) => <Typography variant="h5" gutterBottom {...props} />,
-              h3: ({node, ...props}) => <Typography variant="h6" gutterBottom {...props} />,
-              p: ({node, ...props}) => <Typography paragraph {...props} />,
-              li: ({node, ...props}) => (
+              h1: ({ node, ...props }) => <Typography variant="h4" gutterBottom {...props} />,
+              h2: ({ node, ...props }) => <Typography variant="h5" gutterBottom {...props} />,
+              h3: ({ node, ...props }) => <Typography variant="h6" gutterBottom {...props} />,
+              p: ({ node, ...props }) => <Typography paragraph {...props} />,
+              li: ({ node, ...props }) => (
                 <li>
                   <Typography component="span" {...props} />
                 </li>
