@@ -24,11 +24,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Download Pages artifact from build (gh)
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh run download ${{ github.event.workflow_run.id }} -R ${{ github.repository }} -n pages -D dist
+      - name: Download Pages artifact from build
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: pages
+          path: dist
 
       - name: Re-upload artifact in this run
         uses: actions/upload-pages-artifact@v3
