@@ -29,7 +29,7 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
 
   return (
     <Container id={id} className="my-6">
-      <Card className="shadow">
+      <Card className="shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
         <CardContent className="space-y-4">
           <Typography variant="h4" gutterBottom>{title}</Typography>
           {description && <Typography>{description}</Typography>}

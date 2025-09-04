@@ -13,7 +13,6 @@ import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
 
 const pages = [
-  { label: 'Home', to: '/' },
   { label: 'Resume', to: '/Resume' },
   { label: 'Projects', to: '/Projects' },
   { label: 'About', to: '/About' },
@@ -25,17 +24,46 @@ export const CustomNavbar: React.FC = () => {
   const handleClose = () => setAnchorEl(null);
 
   return (
-    <AppBar position="fixed" color="primary">
+    <AppBar
+      position="fixed"
+      color="transparent"
+      elevation={0}
+      sx={{
+        backgroundImage: 'linear-gradient(to right, #0f172a, #1e293b)',
+        color: 'white',
+      }}
+    >
       <Container>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             component={NavLink}
             to="/"
-            sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
+            sx={{
+              textDecoration: 'none',
+              color: 'inherit',
+              fontWeight: 'bold',
+              letterSpacing: 1,
+              borderRadius: 1,
+              px: 1.5,
+              py: 0.5,
+              cursor: 'pointer',
+              transition: 'background-color 0.2s ease',
+              '&:hover': {
+                backgroundColor: 'rgba(255,255,255,0.08)',
+              },
+              '&:focus-visible': {
+                outline: '2px solid rgba(255,255,255,0.4)',
+                outlineOffset: '2px',
+              },
+              display: 'inline-flex',
+              alignItems: 'center',
+            }}
           >
             Ethan Posner
           </Typography>
+          {/* Spacer to push nav items to the right without making the title fill the bar */}
+          <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -43,7 +71,13 @@ export const CustomNavbar: React.FC = () => {
                 component={NavLink}
                 to={page.to}
                 color="inherit"
-                sx={{ my: 2 }}
+                sx={{
+                  my: 2,
+                  mx: 1,
+                  '&.active': {
+                    borderBottom: '2px solid currentColor',
+                  },
+                }}
               >
                 {page.label}
               </Button>
@@ -60,6 +94,7 @@ export const CustomNavbar: React.FC = () => {
                   component={NavLink}
                   to={page.to}
                   onClick={handleClose}
+                  sx={{ '&.active': { fontWeight: 'bold' } }}
                 >
                   {page.label}
                 </MenuItem>

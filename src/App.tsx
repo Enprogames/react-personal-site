@@ -23,7 +23,17 @@ import './App.css';
 
 function App() {
   const [theme, setTheme] = useState<PaletteMode>('light');
-  const muiTheme = useMemo(() => createTheme({ palette: { mode: theme } }), [theme]);
+  const muiTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: theme,
+          primary: { main: '#0f172a' },
+          secondary: { main: '#14b8a6' },
+        },
+      }),
+    [theme],
+  );
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
