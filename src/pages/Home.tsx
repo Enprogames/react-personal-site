@@ -1,5 +1,6 @@
 // src/pages/Home.tsx
 import React from 'react';
+import bannerImg from '../Assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
 import ProjectCard from '../components/ProjectCard';
@@ -12,9 +13,13 @@ const Home: React.FC = () => {
     <div>
       <section className="relative">
         <img
-          src="/banner-placeholder.svg"
+          src={bannerImg}
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            target.src = `${import.meta.env.BASE_URL}banner-placeholder.svg`;
+          }}
           alt="banner"
-          className="w-full h-80 sm:h-96 md:h-[500px] object-cover"
+          className="w-full h-80 sm:h-96 md:h-[500px] object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center px-4">
           <Typography variant="h3" component="h1" className="mb-4">
