@@ -25,7 +25,7 @@ This document helps human and AI coding agents contribute safely and productivel
 - Unit tests: `npm test` (Vitest)
 - E2E tests: `npm run test:e2e` (requires Playwright browsers; run `npx playwright install` once)
 
-Node 20 is expected in CI. Use `npm ci` to reproduce CI behavior.
+Node 24.7.0 is expected in CI. Use `npm ci` to reproduce CI behavior.
 
 ## Testing Guidance (Vitest + RTL)
 
@@ -57,6 +57,8 @@ it('shows About heading', () => {
 ## CI/CD Pipelines
 
 Workflows (see `.github/workflows`):
+
+- See the CI workflows guide for detailed structure and interactions: [CI Workflows Guide](.github/workflows/agents.md)
 
 - `build.yml`
   - Jobs: `check_outdated_dependencies`, `audit`, `test`, `build`
@@ -137,4 +139,3 @@ gh run view <run-id> --log
 
 - Open an issue or a draft PR describing the approach.
 - Include reproduction steps, test plan, and CI expectations.
-

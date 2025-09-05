@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
 
 const pages = [
+  { label: 'Home', to: '/' },
   { label: 'Resume', to: '/Resume' },
   { label: 'Projects', to: '/Projects' },
   { label: 'About', to: '/About' },
