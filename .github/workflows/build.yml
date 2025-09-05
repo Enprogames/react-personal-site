@@ -18,10 +18,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node.js 20 (cache npm)
+      - name: Setup Node.js 24.7.0 (cache npm)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.7.0
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: Install dependencies (npm ci)
@@ -35,8 +35,11 @@ jobs:
           node -e "
             const fs=require('fs');
             const path=process.env.GITHUB_STEP_SUMMARY;
-            const raw=fs.readFileSync('outdated.json','utf8')||'{}';
-            const o=raw.trim()?JSON.parse(raw):{};
+            const raw=(fs.readFileSync('outdated.json','utf8')||'{}').trim();
+            const start=raw.indexOf('{');
+            const end=raw.lastIndexOf('}');
+            let o={};
+            try { o = (start>=0 && end>=start) ? JSON.parse(raw.slice(start,end+1)) : {}; } catch { o = {}; }
             if (!Object.keys(o).length) {
               console.log('All dependencies up to date.');
               fs.appendFileSync(path, 'All dependencies up to date.\\n');
@@ -82,10 +85,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node.js 20 (cache npm)
+      - name: Setup Node.js 24.7.0 (cache npm)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.7.0
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: Install dependencies (npm ci)
@@ -100,10 +103,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node.js 20 (cache npm)
+      - name: Setup Node.js 24.7.0 (cache npm)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.7.0
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: Install dependencies (npm ci)
@@ -118,10 +121,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node.js 20 (cache npm)
+      - name: Setup Node.js 24.7.0 (cache npm)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.7.0
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: Install dependencies (npm ci)
