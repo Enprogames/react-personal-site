@@ -32,27 +32,29 @@ jobs:
           set -e
           OUT=$(npm outdated --json 2>/dev/null || true)
           echo "${OUT:-{}}" > outdated.json
-          node -e "
-            const fs=require('fs');
-            const path=process.env.GITHUB_STEP_SUMMARY;
-            const raw=(fs.readFileSync('outdated.json','utf8')||'{}').trim();
-            const start=raw.indexOf('{');
-            const end=raw.lastIndexOf('}');
-            let o={};
-            try { o = (start>=0 && end>=start) ? JSON.parse(raw.slice(start,end+1)) : {}; } catch { o = {}; }
-            if (!Object.keys(o).length) {
-              console.log('All dependencies up to date.');
-              fs.appendFileSync(path, 'All dependencies up to date.\\n');
-              process.exit(0);
-            }
-            const rows = Object.entries(o).map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`).join('\\n');
-            const md = `### Outdated dependencies\\n| Package | Current | Wanted | Latest | Type |\\n|---|---:|---:|---:|---|\\n${rows}\\n`;
-            console.log(md);
-            fs.appendFileSync(path, md);
-            for (const [n,v] of Object.entries(o)) {
-              console.log(`::warning title=Outdated dependency::${n} ${v.current} → wanted ${v.wanted}, latest ${v.latest}`);
-            }
-          "
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = process.env.GITHUB_STEP_SUMMARY;
+          const raw = (fs.readFileSync('outdated.json','utf8')||'{}').trim();
+          const start = raw.indexOf('{');
+          const end = raw.lastIndexOf('}');
+          let o = {};
+          try { o = (start>=0 && end>=start) ? JSON.parse(raw.slice(start,end+1)) : {}; } catch { o = {}; }
+          if (!Object.keys(o).length) {
+            console.log('All dependencies up to date.');
+            fs.appendFileSync(path, 'All dependencies up to date.\n');
+            process.exit(0);
+          }
+          const rows = Object.entries(o)
+            .map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`)
+            .join('\n');
+          const md = `### Outdated dependencies\n| Package | Current | Wanted | Latest | Type |\n|---|---:|---:|---:|---|\n${rows}\n`;
+          console.log(md);
+          fs.appendFileSync(path, md);
+          for (const [n,v] of Object.entries(o)) {
+            console.log(`::warning title=Outdated dependency::${n} ${v.current} → wanted ${v.wanted}, latest ${v.latest}`);
+          }
+          NODE
       - name: Update PR comment: outdated dependencies
         if: github.event_name == 'pull_request'
         continue-on-error: true
