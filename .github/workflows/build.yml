@@ -29,7 +29,7 @@ jobs:
         continue-on-error: true
         run: |
           set -e
-          OUT=$(npm outdated --json || true)
+          OUT=$(npm outdated --json 2>/dev/null || true)
           echo "${OUT:-{}}" > outdated.json
           node -e "
             const fs=require('fs');
@@ -51,12 +51,18 @@ jobs:
           "
       - name: Comment on PR with outdated table
         if: github.event_name == 'pull_request'
+        continue-on-error: true
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const body = fs.readFileSync('outdated.json','utf8');
-            const o = body.trim()?JSON.parse(body):{};
+            const raw = (fs.readFileSync('outdated.json','utf8')||'').trim();
+            // Extract valid JSON object defensively
+            const start = raw.indexOf('{');
+            const end = raw.lastIndexOf('}');
+            if (start < 0 || end < start) return;
+            let o = {};
+            try { o = JSON.parse(raw.slice(start, end+1)); } catch { o = {}; }
             if (!Object.keys(o).length) return;
             const rows = Object.entries(o).map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`).join('\n');
             const md = `### Outdated dependencies\n| Package | Current | Wanted | Latest | Type |\n|---|---:|---:|---:|---|\n${rows}\n`;
