@@ -41,9 +41,9 @@ vi.mock('react-pdf', () => ({
       </HashRouter>,
     );
 
-    // Home page
+    // Home page content renders
     expect(
-      screen.getByText(/welcome to my portfolio/i),
+      screen.getByRole('heading', { name: /About Me/i }),
     ).toBeInTheDocument();
 
     const user = userEvent.setup();

@@ -2,6 +2,12 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    // Ensure DOM APIs are available for React Testing Library
+    environment: 'jsdom',
+    // Load custom matchers like toBeInTheDocument
+    setupFiles: ['./src/setupTests.ts'],
+    // Provide global expect/describe/it for setup files like jest-dom
+    globals: true,
     // Exclude Playwright E2E tests from Vitest discovery
     exclude: [
       'tests/**',
@@ -13,4 +19,3 @@ export default defineConfig({
     ],
   },
 });
-
