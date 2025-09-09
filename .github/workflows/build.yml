@@ -59,7 +59,7 @@ jobs:
             console.log(`::warning title=Outdated dependency::${n} ${v.current} → wanted ${v.wanted}, latest ${v.latest}`);
           }
           NODE
-      - name: Update PR comment: outdated dependencies
+      - name: "Update PR comment: outdated dependencies"
         if: ${{ github.event_name == 'pull_request' }}
         continue-on-error: true
         uses: actions/github-script@v7
