@@ -12,14 +12,15 @@ permissions:
 jobs:
   update-deps:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 24.7.0 (cache npm)
+      - name: Setup Node.js (cache npm)
         uses: actions/setup-node@v4
         with:
-          node-version: 24.7.0
+          node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -34,6 +35,12 @@ jobs:
 
       - name: Run audit fix (best-effort)
         run: npm audit fix || true
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Build production bundle
+        run: npm run build
 
       - name: Create PR
         id: create_pr

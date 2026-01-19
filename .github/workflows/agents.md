@@ -4,7 +4,7 @@ This document describes the workflows under `.github/workflows/`, how they are s
 
 ## Overview
 
-- Node.js: 24.7.0 (actions/setup-node@v4)
+- Node.js: from `.nvmrc` (actions/setup-node@v4)
 - Package manager: npm (`npm ci` in CI)
 - Build tool: Vite (`vite build`)
 - Tests: Vitest + React Testing Library; Playwright lives in `tests/` but is not run in CI by default
@@ -26,9 +26,10 @@ Triggers:
 
 Permissions:
 
-- `contents: read`, `pull-requests: write`, `issues: write` (for PR comments)
+- `contents: read` at workflow level
+- `pull-requests: write`, `issues: write` only on the outdated-deps job (for PR comments)
 
-Jobs (runs on `ubuntu-latest`, Node 24.7.0):
+Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`):
 
 - Dependencies Report
   - Checks for outdated dependencies using `npm outdated --json`
@@ -73,7 +74,7 @@ Jobs:
 
 - Runs CodeQL static analysis.
 - Typically triggered on push/PR to `main` and via a weekly schedule.
-- No changes needed for Node; independent of the Node runtime used in app CI.
+- Uses Node from `.nvmrc`.
 
 ## update-deps.yml
 
@@ -84,10 +85,11 @@ Triggers:
 
 Job: update-deps
 
-- Sets up Node 24.7.0 with npm cache
+- Sets up Node from `.nvmrc` with npm cache
 - `npm ci`
 - Runs `npx npm-check-updates -u`, then `npm install`
 - Attempts `npm audit fix` (best effort)
+- Runs `npm test` and `npm run build` before opening a PR
 - Opens a PR with `peter-evans/create-pull-request@v6`
 - PR creation requires enabling "Allow GitHub Actions to create and approve pull requests" or setting `UPDATE_DEPS_TOKEN`
 
