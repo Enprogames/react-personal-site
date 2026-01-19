@@ -4,7 +4,7 @@ This document describes the workflows under `.github/workflows/`, how they are s
 
 ## Overview
 
-- Node.js: from `.nvmrc` (actions/setup-node@v4)
+- Node.js: from `.nvmrc` (actions/setup-node@v5)
 - Package manager: npm (`npm ci` in CI)
 - Build tool: Vite (`vite build`)
 - Tests: Vitest + React Testing Library; Playwright lives in `tests/` but is not run in CI by default
@@ -59,7 +59,7 @@ Notes:
 
 Trigger:
 
-- `workflow_run` of the `build` workflow on `completed` and only proceeds on success.
+- `workflow_run` of the `build` workflow on `completed` and only proceeds on success for `push` events on `main`.
 
 Jobs:
 
