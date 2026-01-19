@@ -36,8 +36,11 @@ jobs:
         run: npm audit fix || true
 
       - name: Create PR
+        id: create_pr
+        continue-on-error: true
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.UPDATE_DEPS_TOKEN || github.token }}
           commit-message: "chore(deps): update dependencies"
           title: "chore(deps): update dependencies"
           branch: chore/update-deps
@@ -46,3 +49,8 @@ jobs:
             - Ran `npx npm-check-updates -u`
             - Ran `npm install`
             - Ran `npm audit fix` (best-effort)
+
+      - name: Warn if PR creation is blocked
+        if: ${{ steps.create_pr.outcome == 'failure' }}
+        run: |
+          echo "::warning::PR creation failed. Enable 'Allow GitHub Actions to create and approve pull requests' or set UPDATE_DEPS_TOKEN."

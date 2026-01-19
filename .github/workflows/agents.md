@@ -89,6 +89,7 @@ Job: update-deps
 - Runs `npx npm-check-updates -u`, then `npm install`
 - Attempts `npm audit fix` (best effort)
 - Opens a PR with `peter-evans/create-pull-request@v6`
+- PR creation requires enabling "Allow GitHub Actions to create and approve pull requests" or setting `UPDATE_DEPS_TOKEN`
 
 ## Local Repro & Maintenance
 
@@ -105,4 +106,3 @@ Job: update-deps
 - Keep CI changes minimal; prefer non-blocking checks for informational jobs.
 - If you alter routes or build output paths, ensure `deploy.yml` still publishes `./dist`.
 - Avoid secrets in logs; workflows rely only on `GITHUB_TOKEN`.
-
