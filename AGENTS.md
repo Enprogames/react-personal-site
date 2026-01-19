@@ -25,7 +25,7 @@ This document helps human and AI coding agents contribute safely and productivel
 - Unit tests: `npm test` (Vitest)
 - E2E tests: `npm run test:e2e` (requires Playwright browsers; run `npx playwright install` once)
 
-Node 24.7.0 is expected in CI. Use `npm ci` to reproduce CI behavior.
+Node version from `.nvmrc` is expected in CI. Use `npm ci` to reproduce CI behavior.
 
 ## Testing Guidance (Vitest + RTL)
 

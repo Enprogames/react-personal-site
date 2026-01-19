@@ -11,26 +11,26 @@ vi.mock('react-pdf', () => ({
   pdfjs: { GlobalWorkerOptions: { workerSrc: '' } },
 }));
 
-  describe('App navigation', () => {
-    const originalFetch = global.fetch;
+describe('App navigation', () => {
+  const originalFetch = globalThis.fetch;
 
-    beforeAll(() => {
-      global.fetch = vi.fn((input: RequestInfo) => {
-        const url = typeof input === 'string' ? input : input.toString();
-        if (url.includes('api.github.com/users')) {
-          return Promise.resolve({
-            json: () => Promise.resolve({ avatar_url: 'https://example.com/avatar.png' }),
-          }) as any;
-        }
+  beforeAll(() => {
+    globalThis.fetch = vi.fn((input: RequestInfo) => {
+      const url = typeof input === 'string' ? input : input.toString();
+      if (url.includes('api.github.com/users')) {
         return Promise.resolve({
-          text: () => Promise.resolve('# Test'),
+          json: () => Promise.resolve({ avatar_url: 'https://example.com/avatar.png' }),
         }) as any;
-      });
+      }
+      return Promise.resolve({
+        text: () => Promise.resolve('# Test'),
+      }) as any;
     });
+  });
 
-    afterAll(() => {
-      global.fetch = originalFetch;
-    });
+  afterAll(() => {
+    globalThis.fetch = originalFetch;
+  });
 
   it('renders all pages without console errors', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
