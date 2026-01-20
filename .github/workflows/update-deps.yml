@@ -36,6 +36,15 @@ jobs:
       - name: Run audit fix (best-effort)
         run: npm audit fix || true
 
+      - name: Check for package.json changes
+        id: package_json
+        run: |
+          if git diff --name-only -- package.json | grep -q '^package.json$'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run unit tests
         run: npm test
 
@@ -44,6 +53,7 @@ jobs:
 
       - name: Create PR
         id: create_pr
+        if: ${{ steps.package_json.outputs.changed == 'true' }}
         continue-on-error: true
         uses: peter-evans/create-pull-request@v6
         with:
@@ -56,6 +66,11 @@ jobs:
             - Ran `npx npm-check-updates -u`
             - Ran `npm install`
             - Ran `npm audit fix` (best-effort)
+
+      - name: Skip PR creation (package.json unchanged)
+        if: ${{ steps.package_json.outputs.changed != 'true' }}
+        run: |
+          echo "::notice::package.json unchanged; skipping PR creation to avoid lockfile-only PRs."
 
       - name: Warn if PR creation is blocked
         if: ${{ steps.create_pr.outcome == 'failure' }}
