@@ -9,8 +9,13 @@ My portfolio website, created using [React.js](https://react.dev/).
 
 ### Setup and Run Locally
 1. Clone the repository
-2. Install dependencies: `npm install`
+2. Install dependencies: `npm ci`
 3. Run the app: `npm run dev`
+
+Useful local checks:
+- `npm run lint`
+- `npm test`
+- `npm run build`
 
 Updating the site:
 1. Make sure you are on the main branch

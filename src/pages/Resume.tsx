@@ -1,5 +1,5 @@
 // pages/Resume.tsx
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type FC } from 'react';
 import { Button, Container, Card, CardContent } from '@mui/material';
 import { pdfjs, Document, Page } from 'react-pdf';
 import { AiOutlineDownload } from 'react-icons/ai';
@@ -8,39 +8,37 @@ import './Resume.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
-const DownloadIcon = AiOutlineDownload as React.FC<{ size?: number; className?: string }>;
+const DownloadIcon = AiOutlineDownload as FC<{ size?: number; className?: string }>;
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
 ).toString();
 
-const Resume: React.FC = () => {
+const Resume: FC = () => {
   const [numPages, setNumPages] = useState<number | null>(null);
-  const [, setWindowWidth] = useState<number>(window.innerWidth);
+  const [pageScale, setPageScale] = useState(1);
   const pdfContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleWindowSize = () => {
-      setWindowWidth(window.innerWidth);
+    const updateScale = () => {
+      const containerWidth = pdfContainerRef.current?.offsetWidth ?? 0;
+      const baseWidth = 600;
+      const nextScale = Math.max(containerWidth / baseWidth, 0.75);
+      setPageScale(nextScale);
     };
-    window.addEventListener('resize', handleWindowSize);
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+
     return () => {
-      window.removeEventListener('resize', handleWindowSize);
+      window.removeEventListener('resize', updateScale);
     };
   }, []);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
   }
-
-  const getScale = () => {
-    const containerWidth = pdfContainerRef.current ? pdfContainerRef.current.offsetWidth : 0;
-    const baseWidth = 600;
-    const scale = containerWidth / baseWidth;
-    const minScale = 0.75;
-    return Math.max(scale, minScale);
-  };
 
   return (
     <Container maxWidth={false} className="py-6">
@@ -65,7 +63,7 @@ const Resume: React.FC = () => {
                   className="flex flex-col items-center"
                 >
                   {Array.from(new Array(numPages || 0), (_el, index) => (
-                    <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={getScale()} />
+                    <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={pageScale} />
                   ))}
                 </Document>
               </div>

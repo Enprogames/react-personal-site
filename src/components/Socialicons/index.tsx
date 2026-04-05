@@ -1,5 +1,5 @@
 // components/Socialicons/index.tsx
-import React from 'react';
+import type { ComponentType, FC } from 'react';
 import { Box, Link, Typography } from '@mui/material';
 import {
   FaGithub as FaGithubIcon,
@@ -12,7 +12,7 @@ import {
 import { socialprofiles } from '../../Assets/social_accounts';
 import { useColorModeValue } from '../../hooks/useColorModeValue';
 
-type SizedIcon = React.ComponentType<{ size: number }>;
+type SizedIcon = ComponentType<{ size: number }>;
 
 const icons: Record<string, SizedIcon> = {
   twitter: FaTwitterIcon as unknown as SizedIcon,
@@ -23,7 +23,7 @@ const icons: Record<string, SizedIcon> = {
   twitch: FaTwitchIcon as unknown as SizedIcon,
 };
 
-export const Socialicons: React.FC = () => {
+export const Socialicons: FC = () => {
   const hoverColor = useColorModeValue('grey.800', 'grey.100');
 
   return (

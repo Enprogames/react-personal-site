@@ -1,5 +1,5 @@
 // components/EditableArticle/EditableItem/index.tsx
-import React from 'react';
+import type { ChangeEvent, FC } from 'react';
 import TextField from '@mui/material/TextField';
 
 interface EditableItemProps {
@@ -7,10 +7,10 @@ interface EditableItemProps {
   item: { title: string; description: string };
   onContentChange: (
     field: string
-  ) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  ) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export const EditableItem: React.FC<EditableItemProps> = ({
+export const EditableItem: FC<EditableItemProps> = ({
   isEditing,
   item,
   onContentChange,

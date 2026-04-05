@@ -1,50 +1,49 @@
 // src/components/TypingEffect/index.tsx
-import React from 'react';
+import type { FC } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
-export const TypingEffect: React.FC = () => {
-    const messages: { text: string }[] = [
-        { text: 'Web Developer' },
-        { text: 'Backend Web Developer' },
-        { text: 'Frontend Web Developer' },
-        { text: 'Hiking Enthusiast' },
-        { text: 'Cycling Enthusiast' },
-        { text: 'Django Developer' },
-        { text: 'React Developer' },
-        { text: 'Python Developer' },
-        { text: 'JavaScript Developer' },
-        { text: 'Software Engineer' },
-        { text: 'Software Developer' },
-        { text: 'Full Stack Developer' },
-        { text: 'Web Designer' },
-        { text: 'AWS Full-Stack Engineer' },
-        { text: 'WPF Developer' },
-        { text: 'C# Developer' }
-    ];
+const messages = [
+  'Web Developer',
+  'Backend Web Developer',
+  'Frontend Web Developer',
+  'Hiking Enthusiast',
+  'Cycling Enthusiast',
+  'Django Developer',
+  'React Developer',
+  'Python Developer',
+  'JavaScript Developer',
+  'Software Engineer',
+  'Software Developer',
+  'Full Stack Developer',
+  'Web Designer',
+  'AWS Full-Stack Engineer',
+  'WPF Developer',
+  'C# Developer',
+];
 
-    // Fisher-Yates Shuffle
-    for (let i = messages.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [messages[i], messages[j]] = [messages[j], messages[i]];
-    }
+function createSequence() {
+  const shuffled = [...messages];
 
-    // Prepare the sequence for react-type-animation
-    // It needs an array like: [text1, delay1, text2, delay2, ...]
-    const sequence = messages.flatMap((message) => [
-        message.text,
-        1500 // Pause after typing each message
-    ]);
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
 
-    return (
-        <TypeAnimation
-            sequence={sequence}
-            wrapper="span" // Or 'div', 'p', etc. - the HTML element to wrap the text
-            speed={30} // Typing speed (lower is faster) - adjust to match desired feel
-            deletionSpeed={50} // Deletion speed (optional, defaults same as speed)
-            cursor={true} // Show cursor
-            repeat={Infinity} // Repeat the sequence indefinitely
-            style={{ fontSize: '1.25em', display: 'inline-block' }} // Optional styling
-        />
-    );
+  return shuffled.flatMap((message) => [message, 1500]);
+}
+
+const sequence = createSequence();
+
+export const TypingEffect: FC = () => {
+  return (
+    <TypeAnimation
+      sequence={sequence}
+      wrapper="span"
+      speed={30}
+      deletionSpeed={50}
+      cursor
+      repeat={Infinity}
+      style={{ fontSize: '1.25em', display: 'inline-block' }}
+    />
+  );
 };
-

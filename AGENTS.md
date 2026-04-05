@@ -22,6 +22,7 @@ This document helps human and AI coding agents contribute safely and productivel
 
 - Dev server: `npm run dev`
 - Build: `npm run build`
+- Lint: `npm run lint`
 - Unit tests: `npm test` (Vitest)
 - E2E tests: `npm run test:e2e` (requires Playwright browsers; run `npx playwright install` once)
 
@@ -61,8 +62,8 @@ Workflows (see `.github/workflows`):
 - See the CI workflows guide for detailed structure and interactions: [CI Workflows Guide](.github/workflows/agents.md)
 
 - `build.yml`
-  - Jobs: `check_outdated_dependencies`, `audit`, `test`, `build`
-  - `build` depends on `test` and uploads artifact `pages` from `dist/`
+  - Jobs: `check_outdated_dependencies`, `audit`, `lint`, `test`, `build`
+  - `build` depends on `lint` and `test` and uploads artifact `pages` from `dist/`
   - Installs with `npm ci --no-audit --no-fund`
 - `deploy.yml`
   - Triggers on `workflow_run` completion of `build` and only deploys on success
@@ -124,9 +125,10 @@ gh run view <run-id> --log
 
 ## Agent Checklist for Changes
 
+- Run `npm run lint` and ensure it passes.
 - Run `npm test` and ensure all tests pass.
 - Run `npm run build` to verify production build.
-- Consider CI impact: artifact name remains `pages`; `build` depends on `test`.
+- Consider CI impact: artifact name remains `pages`; `build` depends on `lint` and `test`.
 - Update docs when changing behaviors, routes, or environment assumptions.
 - Keep PRs small and focused; explain rationale and trade-offs.
 

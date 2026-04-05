@@ -1,9 +1,9 @@
 // pages/Projects.tsx
-import React from 'react';
+import type { FC } from 'react';
 import { ProjectPane } from '../components/ProjectPane';
 import { projects } from '../Assets/projects';
 
-const Projects: React.FC = () => {
+const Projects: FC = () => {
   return (
     <>
         {projects.map((project, index) => (

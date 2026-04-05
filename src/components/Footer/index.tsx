@@ -1,10 +1,10 @@
 // components/Footer/index.tsx
-import React from 'react';
+import type { FC } from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import { Socialicons } from '../Socialicons';
 import { useColorModeValue } from '../../hooks/useColorModeValue';
 
-export const Footer: React.FC = () => {
+export const Footer: FC = () => {
   const year = new Date().getFullYear();
   const bg = useColorModeValue('grey.100', 'grey.800');
 
