@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { HashRouter } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import App from './App';
 
 vi.mock('react-pdf', () => ({
-  Document: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Document: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   Page: () => <div>Page</div>,
   pdfjs: { GlobalWorkerOptions: { workerSrc: '' } },
 }));

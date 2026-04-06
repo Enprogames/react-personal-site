@@ -1,5 +1,5 @@
 // src/pages/Home.tsx
-import React from 'react';
+import type { FC } from 'react';
 import bannerImg from '../Assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
@@ -8,7 +8,7 @@ import { projects } from '../Assets/projects';
 
 const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];
 
-const Home: React.FC = () => {
+const Home: FC = () => {
   return (
     <div>
       <section className="relative">

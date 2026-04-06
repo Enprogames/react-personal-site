@@ -111,6 +111,24 @@ jobs:
         continue-on-error: true
         run: npm audit
 
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js (cache npm)
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies (npm ci)
+        run: npm ci --no-audit --no-fund
+      - name: Run ESLint
+        run: npm run lint
+
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -131,7 +149,7 @@ jobs:
 
   build:
     name: Build & Pages Artifact
-    needs: [test]
+    needs: [lint, test]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

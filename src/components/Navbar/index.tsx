@@ -1,5 +1,5 @@
 // components/Navbar/index.tsx
-import React from 'react';
+import { useState, type FC, type MouseEvent } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
@@ -19,9 +19,9 @@ const pages = [
   { label: 'About', to: '/About' },
 ];
 
-export const CustomNavbar: React.FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const handleOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+export const CustomNavbar: FC = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const handleOpen = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   return (

@@ -1,5 +1,5 @@
 // components/ProjectCard/index.tsx
-import React from 'react';
+import type { FC } from 'react';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import { HashLink } from 'react-router-hash-link';
 import './ProjectCard.css';
@@ -10,7 +10,7 @@ interface ProjectCardProps {
   imgSrc: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imgSrc }) => {
+const ProjectCard: FC<ProjectCardProps> = ({ title, description, imgSrc }) => {
   return (
     <HashLink
       to={`/projects#${encodeURIComponent(title.toLowerCase().replace(/ /g, '-'))}`}

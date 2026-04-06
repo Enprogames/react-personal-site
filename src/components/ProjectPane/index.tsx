@@ -1,5 +1,5 @@
 // components/ProjectPane/index.tsx
-import React from 'react';
+import type { FC } from 'react';
 import { Container, Card, CardContent, Typography, Button, Box } from '@mui/material';
 import { CodeBlock } from 'react-code-blocks';
 import { FaGithub as FaGithubIcon } from 'react-icons/fa';
@@ -15,7 +15,7 @@ interface ProjectPaneProps {
   repositoryLink?: string;
 }
 
-export const ProjectPane: React.FC<ProjectPaneProps> = ({
+export const ProjectPane: FC<ProjectPaneProps> = ({
   title,
   description,
   keyPoints,
@@ -25,7 +25,7 @@ export const ProjectPane: React.FC<ProjectPaneProps> = ({
   repositoryLink,
 }) => {
   const id = encodeURIComponent(title.toLowerCase().replace(/ /g, '-'));
-  const FaGithub = FaGithubIcon as unknown as React.FC;
+  const FaGithub = FaGithubIcon as unknown as FC;
 
   return (
     <Container id={id} className="my-6">

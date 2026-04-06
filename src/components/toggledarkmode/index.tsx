@@ -1,11 +1,11 @@
 // components/toggledarkmode/index.tsx
-import React, { useContext } from 'react';
+import { useContext, type FC } from 'react';
 import Fab from '@mui/material/Fab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { ThemeContext } from '../../ThemeContext';
 
-export const DarkModeToggle: React.FC = () => {
+export const DarkModeToggle: FC = () => {
   const { theme, setTheme } = useContext(ThemeContext)!;
 
   const toggleTheme = () => {

@@ -12,7 +12,7 @@ This document describes the workflows under `.github/workflows/`, how they are s
 
 Workflows:
 
-- `build.yml` — main pipeline (dependency report, audit, unit tests, build + artifact)
+- `build.yml` — main pipeline (dependency report, audit, lint, unit tests, build + artifact)
 - `deploy.yml` — publishes the `pages` artifact to GitHub Pages after a successful `build` run
 - `codeql.yml` — static code analysis via CodeQL
 - `update-deps.yml` — scheduled dependency updates with PR automation
@@ -41,12 +41,16 @@ Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`):
   - Runs `npm audit`
   - Marked `continue-on-error: true`; informational only
 
+- Lint
+  - Installs with `npm ci`
+  - Runs `npm run lint` (ESLint 9 flat config)
+
 - Unit Tests
   - Installs with `npm ci`
   - Runs `npm test` (Vitest in `jsdom` environment)
 
 - Build & Pages Artifact
-  - Needs: `test`
+  - Needs: `lint`, `test`
   - Builds with `npm run build` (TypeScript + Vite)
   - Uploads artifact `pages` from `./dist` using `actions/upload-artifact@v4`
 
@@ -95,8 +99,8 @@ Job: update-deps
 
 ## Local Repro & Maintenance
 
-- Use Node 24.7.0 (see `.nvmrc`).
-- Install with `npm ci`, run tests with `npm test`, build with `npm run build`.
+- Use the version in `.nvmrc`.
+- Install with `npm ci`, run lint with `npm run lint`, run tests with `npm test`, and build with `npm run build`.
 - View recent CI runs:
 
   - `gh run list --branch main --limit 10`

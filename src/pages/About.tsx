@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { Container, Card, CardContent, Typography, Avatar } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import { aboutContent } from '../Assets/about';
 
-const About: React.FC = () => {
+const About: FC = () => {
   const [markdown, setMarkdown] = useState<string>('');
   const [profileUrl, setProfileUrl] = useState<string>('');
 
@@ -36,11 +36,11 @@ const About: React.FC = () => {
           </div>
           <ReactMarkdown
             components={{
-              h1: ({ node, ...props }) => <Typography variant="h4" gutterBottom {...props} />,
-              h2: ({ node, ...props }) => <Typography variant="h5" gutterBottom {...props} />,
-              h3: ({ node, ...props }) => <Typography variant="h6" gutterBottom {...props} />,
-              p: ({ node, ...props }) => <Typography paragraph {...props} />,
-              li: ({ node, ...props }) => (
+              h1: ({ node: _node, ...props }) => <Typography variant="h4" gutterBottom {...props} />,
+              h2: ({ node: _node, ...props }) => <Typography variant="h5" gutterBottom {...props} />,
+              h3: ({ node: _node, ...props }) => <Typography variant="h6" gutterBottom {...props} />,
+              p: ({ node: _node, ...props }) => <Typography paragraph {...props} />,
+              li: ({ node: _node, ...props }) => (
                 <li>
                   <Typography component="span" {...props} />
                 </li>

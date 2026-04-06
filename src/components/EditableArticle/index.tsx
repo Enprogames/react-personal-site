@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ChangeEvent, FC } from 'react';
 import { Button, Container, Alert, Box } from '@mui/material';
 import { EditableSection } from './EditableSection';
 
@@ -10,14 +10,14 @@ interface EditableArticleProps {
     sectionIndex: number,
     itemIndex: number | null,
     field: string,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handleSave: () => void;
   addSection: () => void;
   error?: string;
 }
 
-export const EditableArticle: React.FC<EditableArticleProps> = ({
+export const EditableArticle: FC<EditableArticleProps> = ({
   isEditing,
   setIsEditing,
   content,
