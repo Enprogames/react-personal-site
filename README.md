@@ -34,5 +34,5 @@ Updating the site:
     ```
 3. Update package.json
     ```bash
-    npx npm-check-updates -u
+    npx npm-check-updates -u --target semver
     ```

@@ -91,10 +91,12 @@ Job: update-deps
 
 - Sets up Node from `.nvmrc` with npm cache
 - `npm ci`
-- Runs `npx npm-check-updates -u`, then `npm install`
+- Reports latest available dependency updates without changing files
+- Runs `npx npm-check-updates -u --target semver`, then `npm install`
 - Attempts `npm audit fix` (best effort)
-- Runs `npm test` and `npm run build` before opening a PR
-- Opens a PR with `peter-evans/create-pull-request@v6` only when `package.json` changes
+- Verifies the final lockfile with `npm ci --no-audit --no-fund`
+- Runs `npm run lint`, `npm test`, and `npm run build` before opening a PR
+- Opens a PR with `peter-evans/create-pull-request@v8` only when `package.json` changes
 - PR creation requires enabling "Allow GitHub Actions to create and approve pull requests" or setting `UPDATE_DEPS_TOKEN`
 
 ## Local Repro & Maintenance
