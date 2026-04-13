@@ -12,10 +12,10 @@ permissions:
 jobs:
   update-deps:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js (cache npm)
         uses: actions/setup-node@v5
@@ -25,16 +25,23 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install deps
-        run: npm ci
+        run: npm ci --no-audit --no-fund
+
+      - name: Report latest available updates
+        continue-on-error: true
+        run: npx npm-check-updates --target latest
 
       - name: Update versions with npm-check-updates
-        run: npx npm-check-updates -u
+        run: npx npm-check-updates -u --target semver
 
       - name: Install updated deps
         run: npm install
 
       - name: Run audit fix (best-effort)
         run: npm audit fix || true
+
+      - name: Verify clean install from lockfile
+        run: npm ci --no-audit --no-fund
 
       - name: Check for package.json changes
         id: package_json
@@ -44,6 +51,9 @@ jobs:
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Run lint
+        run: npm run lint
 
       - name: Run unit tests
         run: npm test
@@ -55,7 +65,7 @@ jobs:
         id: create_pr
         if: ${{ steps.package_json.outputs.changed == 'true' }}
         continue-on-error: true
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.UPDATE_DEPS_TOKEN || github.token }}
           commit-message: "chore(deps): update dependencies"
@@ -63,9 +73,13 @@ jobs:
           branch: chore/update-deps
           body: |
             Automated dependency updates using npm-check-updates and npm audit fix.
-            - Ran `npx npm-check-updates -u`
+            - Ran `npx npm-check-updates -u --target semver`
             - Ran `npm install`
             - Ran `npm audit fix` (best-effort)
+            - Ran `npm ci --no-audit --no-fund`
+            - Ran `npm run lint`
+            - Ran `npm test`
+            - Ran `npm run build`
 
       - name: Skip PR creation (package.json unchanged)
         if: ${{ steps.package_json.outputs.changed != 'true' }}
