@@ -5,17 +5,17 @@ This document describes the workflows under `.github/workflows/`, how they are s
 ## Overview
 
 - Node.js: from `.nvmrc` (actions/setup-node@v5)
-- Package manager: npm (`npm ci` in CI)
+- Package manager: pnpm 11 (`pnpm install --frozen-lockfile` in CI)
 - Build tool: Vite (`vite build`)
 - Tests: Vitest + React Testing Library; Playwright lives in `tests/` but is not run in CI by default
 - Deploy: GitHub Pages (artifact name `pages` from `./dist`)
 
 Workflows:
 
-- `build.yml` — main pipeline (dependency report, audit, lint, unit tests, build + artifact)
-- `deploy.yml` — publishes the `pages` artifact to GitHub Pages after a successful `build` run
-- `codeql.yml` — static code analysis via CodeQL
-- `update-deps.yml` — scheduled dependency updates with PR automation
+- `build.yml` - main pipeline (dependency report, audit, lint, unit tests, build + artifact)
+- `deploy.yml` - publishes the `pages` artifact to GitHub Pages after a successful `build` run
+- `codeql.yml` - static code analysis via CodeQL
+- `update-deps.yml` - scheduled dependency updates with PR automation
 
 ## build.yml
 
@@ -29,29 +29,29 @@ Permissions:
 - `contents: read` at workflow level
 - `pull-requests: write`, `issues: write` only on the outdated-deps job (for PR comments)
 
-Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`):
+Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
 
 - Dependencies Report
-  - Checks for outdated dependencies using `npm outdated --json`
+  - Checks for outdated dependencies using `pnpm outdated --format json`
   - Writes a summary table to the GitHub Step Summary
   - On PRs, posts/updates a comment with the table (non-blocking; resilient JSON parsing)
-  - Uses npm cache and installs with `npm ci --no-audit --no-fund`
+  - Uses pnpm cache and installs with `pnpm install --frozen-lockfile`
 
 - Security Audit (non-blocking)
-  - Runs `npm audit`
+  - Runs `pnpm audit`
   - Marked `continue-on-error: true`; informational only
 
 - Lint
-  - Installs with `npm ci`
-  - Runs `npm run lint` (ESLint 9 flat config)
+  - Installs with `pnpm install --frozen-lockfile`
+  - Runs `pnpm run lint` (ESLint 9 flat config)
 
 - Unit Tests
-  - Installs with `npm ci`
-  - Runs `npm test` (Vitest in `jsdom` environment)
+  - Installs with `pnpm install --frozen-lockfile`
+  - Runs `pnpm test` (Vitest in `jsdom` environment)
 
 - Build & Pages Artifact
   - Needs: `lint`, `test`
-  - Builds with `npm run build` (TypeScript + Vite)
+  - Builds with `pnpm run build` (TypeScript + Vite)
   - Uploads artifact `pages` from `./dist` using `actions/upload-artifact@v4`
 
 Notes:
@@ -77,8 +77,8 @@ Jobs:
 ## codeql.yml
 
 - Runs CodeQL static analysis.
-- Typically triggered on push/PR to `main` and via a weekly schedule.
-- Uses Node from `.nvmrc`.
+- Triggered on push/PR to `main` and via a weekly schedule.
+- Uses Node from `.nvmrc`, pnpm from `packageManager`, and installs with `pnpm install --frozen-lockfile`.
 
 ## update-deps.yml
 
@@ -89,20 +89,22 @@ Triggers:
 
 Job: update-deps
 
-- Sets up Node from `.nvmrc` with npm cache
-- `npm ci`
+- Sets up pnpm from `packageManager` and Node from `.nvmrc` with pnpm cache
+- Installs with `pnpm install --frozen-lockfile`
+- Summarizes any `minimumReleaseAgeExclude` entries for regular audit
 - Reports latest available dependency updates without changing files
-- Runs `npx npm-check-updates -u --target semver`, then `npm install`
-- Attempts `npm audit fix` (best effort)
-- Verifies the final lockfile with `npm ci --no-audit --no-fund`
-- Runs `npm run lint`, `npm test`, and `npm run build` before opening a PR
+- Runs `pnpm dlx npm-check-updates -u --target semver`, then `pnpm install`
+- Runs `pnpm audit` as a non-blocking report
+- Verifies the final lockfile with `pnpm install --frozen-lockfile`
+- Runs `pnpm run lint`, `pnpm test`, and `pnpm run build` before opening a PR
 - Opens a PR with `peter-evans/create-pull-request@v8` only when `package.json` changes
 - PR creation requires enabling "Allow GitHub Actions to create and approve pull requests" or setting `UPDATE_DEPS_TOKEN`
 
 ## Local Repro & Maintenance
 
 - Use the version in `.nvmrc`.
-- Install with `npm ci`, run lint with `npm run lint`, run tests with `npm test`, and build with `npm run build`.
+- Use pnpm through Corepack.
+- Install with `pnpm install --frozen-lockfile`, run lint with `pnpm run lint`, run tests with `pnpm test`, and build with `pnpm run build`.
 - View recent CI runs:
 
   - `gh run list --branch main --limit 10`

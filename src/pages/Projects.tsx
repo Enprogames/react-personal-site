@@ -6,19 +6,19 @@ import { projects } from '../Assets/projects';
 const Projects: FC = () => {
   return (
     <>
-        {projects.map((project, index) => (
-            <ProjectPane
-              key={index}
-              title={project.title}
-              description={project.description}
-              keyPoints={project.keyPoints}
-              technologies={project.technologies}
-              image={project.landscapeImage}
-              elements={project.elements}
-              repositoryLink={project.repositoryLink} />
-
-        ))}
-      </>
+      {projects.map((project) => (
+        <ProjectPane
+          key={project.title}
+          title={project.title}
+          description={project.description}
+          keyPoints={project.keyPoints}
+          technologies={project.technologies}
+          image={project.landscapeImage}
+          elements={project.elements}
+          repositoryLink={project.repositoryLink}
+        />
+      ))}
+    </>
   );
 };
 

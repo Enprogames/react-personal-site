@@ -1,8 +1,11 @@
 // components/ProjectPane/index.tsx
 import type { FC } from 'react';
 import { Container, Card, CardContent, Typography, Button, Box } from '@mui/material';
-import { CodeBlock } from 'react-code-blocks';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { FaGithub as FaGithubIcon } from 'react-icons/fa';
+import type { ProjectElement } from '../../types/projects';
+import { getProjectAnchorId } from '../../utils/projectAnchors';
 import './ProjectPane.css';
 
 interface ProjectPaneProps {
@@ -11,7 +14,7 @@ interface ProjectPaneProps {
   keyPoints?: string[];
   technologies?: string[];
   image?: string;
-  elements?: Array<{ type: string; content: any; language?: string; theme?: string }>;
+  elements?: ProjectElement[];
   repositoryLink?: string;
 }
 
@@ -24,7 +27,7 @@ export const ProjectPane: FC<ProjectPaneProps> = ({
   elements,
   repositoryLink,
 }) => {
-  const id = encodeURIComponent(title.toLowerCase().replace(/ /g, '-'));
+  const id = getProjectAnchorId(title);
   const FaGithub = FaGithubIcon as unknown as FC;
 
   return (
@@ -65,7 +68,7 @@ export const ProjectPane: FC<ProjectPaneProps> = ({
                     <img
                       key={index}
                       src={element.content}
-                      alt={title}
+                      alt={element.alt ?? title}
                       className="project-image shadow max-w-full h-auto block"
                     />
                   );
@@ -86,12 +89,9 @@ export const ProjectPane: FC<ProjectPaneProps> = ({
                 case 'code':
                   return (
                     <Box key={index} className="my-4">
-                      <CodeBlock
-                        text={element.content}
-                        language={element.language || 'text'}
-                        showLineNumbers={false}
-                        theme={element.theme || 'dracula'}
-                      />
+                      <SyntaxHighlighter language={element.language ?? 'text'} style={dracula}>
+                        {element.content}
+                      </SyntaxHighlighter>
                     </Box>
                   );
                 default:

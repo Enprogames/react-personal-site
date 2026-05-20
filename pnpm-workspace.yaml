@@ -1,0 +1,6 @@
+minimumReleaseAge: 10080
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+
+# Exceptions must be specific, justified, and removed after the next dependency audit.
+minimumReleaseAgeExclude: []

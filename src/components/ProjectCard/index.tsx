@@ -2,6 +2,7 @@
 import type { FC } from 'react';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import { HashLink } from 'react-router-hash-link';
+import { getProjectAnchorId } from '../../utils/projectAnchors';
 import './ProjectCard.css';
 
 interface ProjectCardProps {
@@ -13,7 +14,7 @@ interface ProjectCardProps {
 const ProjectCard: FC<ProjectCardProps> = ({ title, description, imgSrc }) => {
   return (
     <HashLink
-      to={`/projects#${encodeURIComponent(title.toLowerCase().replace(/ /g, '-'))}`}
+      to={`/projects#${getProjectAnchorId(title)}`}
       scroll={(el) => {
         const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
         const yOffset = -60; // Adjust this value based on your navbar's height

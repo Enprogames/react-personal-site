@@ -9,13 +9,17 @@ My portfolio website, created using [React.js](https://react.dev/).
 
 ### Setup and Run Locally
 1. Clone the repository
-2. Install dependencies: `npm ci`
-3. Run the app: `npm run dev`
+2. Enable Corepack: `corepack enable`
+3. Install dependencies: `pnpm install --frozen-lockfile`
+4. Run the app: `pnpm run dev`
+
+If Corepack cannot create a global `pnpm` shim on Windows, use `corepack pnpm ...` for the same commands.
 
 Useful local checks:
-- `npm run lint`
-- `npm test`
-- `npm run build`
+- `pnpm run lint`
+- `pnpm test`
+- `pnpm run build`
+- `pnpm run test:e2e`
 
 Updating the site:
 1. Make sure you are on the main branch
@@ -23,16 +27,22 @@ Updating the site:
 3. Run `git push`
     - The `deploy` workflow will automatically publish the site after a successful build.
 
-### Updating Dependencies (https://stackoverflow.com/a/16074029)
-1. Install npm-check-updates
+### Updating Dependencies
+
+Dependency management policy is documented in [docs/dependency-management.md](docs/dependency-management.md).
+
+1. Report available updates
     ```bash
-    npm i -g npm-check-updates
+    pnpm dlx npm-check-updates
     ```
-2. Run npm-check-updates
+2. Update package.json within current semver ranges
     ```bash
-    npx npm-check-updates
+    pnpm dlx npm-check-updates -u --target semver
     ```
-3. Update package.json
+3. Install and verify
     ```bash
-    npx npm-check-updates -u --target semver
+    pnpm install
+    pnpm run lint
+    pnpm test
+    pnpm run build
     ```

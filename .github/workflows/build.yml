@@ -29,41 +29,43 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup Node.js (cache npm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies (npm ci)
-        run: npm ci --no-audit --no-fund
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Report outdated dependencies to summary
         continue-on-error: true
         run: |
           set -e
-          OUT=$(npm outdated --json 2>/dev/null || true)
+          OUT=$(pnpm outdated --format json 2>/dev/null || true)
           echo "${OUT:-{}}" > outdated.json
           node - <<'NODE'
           const fs = require('fs');
           const path = process.env.GITHUB_STEP_SUMMARY;
-          const raw = (fs.readFileSync('outdated.json','utf8')||'{}').trim();
+          const raw = (fs.readFileSync('outdated.json', 'utf8') || '{}').trim();
           const start = raw.indexOf('{');
           const end = raw.lastIndexOf('}');
           let o = {};
-          try { o = (start>=0 && end>=start) ? JSON.parse(raw.slice(start,end+1)) : {}; } catch { o = {}; }
+          try { o = (start >= 0 && end >= start) ? JSON.parse(raw.slice(start, end + 1)) : {}; } catch { o = {}; }
           if (!Object.keys(o).length) {
             console.log('All dependencies up to date.');
             fs.appendFileSync(path, 'All dependencies up to date.\n');
             process.exit(0);
           }
           const rows = Object.entries(o)
-            .map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`)
+            .map(([n, v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.dependencyType || v.type || ''} |`)
             .join('\n');
           const md = `### Outdated dependencies\n| Package | Current | Wanted | Latest | Type |\n|---|---:|---:|---:|---|\n${rows}\n`;
           console.log(md);
           fs.appendFileSync(path, md);
-          for (const [n,v] of Object.entries(o)) {
-            console.log(`::warning title=Outdated dependency::${n} ${v.current} → wanted ${v.wanted}, latest ${v.latest}`);
+          for (const [n, v] of Object.entries(o)) {
+            console.log(`::warning title=Outdated dependency::${n} ${v.current} -> wanted ${v.wanted}, latest ${v.latest}`);
           }
           NODE
       - name: "Update PR comment: outdated dependencies"
@@ -73,15 +75,16 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const raw = (fs.readFileSync('outdated.json','utf8')||'').trim();
-            // Extract valid JSON object defensively
+            const raw = (fs.readFileSync('outdated.json', 'utf8') || '').trim();
             const start = raw.indexOf('{');
             const end = raw.lastIndexOf('}');
             if (start < 0 || end < start) return;
             let o = {};
-            try { o = JSON.parse(raw.slice(start, end+1)); } catch { o = {}; }
+            try { o = JSON.parse(raw.slice(start, end + 1)); } catch { o = {}; }
             if (!Object.keys(o).length) return;
-            const rows = Object.entries(o).map(([n,v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.type||''} |`).join('\n');
+            const rows = Object.entries(o)
+              .map(([n, v]) => `| ${n} | ${v.current} | ${v.wanted} | ${v.latest} | ${v.dependencyType || v.type || ''} |`)
+              .join('\n');
             const md = `### Outdated dependencies\n| Package | Current | Wanted | Latest | Type |\n|---|---:|---:|---:|---|\n${rows}\n`;
             const {owner, repo, number} = context.issue;
             const existing = await github.rest.issues.listComments({owner, repo, issue_number: number});
@@ -99,17 +102,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup Node.js (cache npm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies (npm ci)
-        run: npm ci --no-audit --no-fund
-      - name: Run npm audit (non-blocking)
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run pnpm audit (non-blocking)
         continue-on-error: true
-        run: npm audit
+        run: pnpm audit
 
   lint:
     name: Lint
@@ -118,16 +123,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup Node.js (cache npm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies (npm ci)
-        run: npm ci --no-audit --no-fund
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Run ESLint
-        run: npm run lint
+        run: pnpm run lint
 
   test:
     name: Unit Tests
@@ -136,16 +143,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup Node.js (cache npm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies (npm ci)
-        run: npm ci --no-audit --no-fund
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Run unit tests
-        run: npm test
+        run: pnpm test
 
   build:
     name: Build & Pages Artifact
@@ -155,16 +164,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup Node.js (cache npm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies (npm ci)
-        run: npm ci --no-audit --no-fund
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Build production bundle
-        run: npm run build
+        run: pnpm run build
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v4
         with:
