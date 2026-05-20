@@ -7,26 +7,34 @@ This document helps human and AI coding agents contribute safely and productivel
 - Framework: React + TypeScript (Vite)
 - UI: MUI 7 + TailwindCSS 4
 - Routing: `react-router-dom` (HashRouter)
+- Package manager: pnpm 11 via Corepack
 - Tests: Vitest + React Testing Library (unit/integration), Playwright (E2E)
 - Build: `vite build`
 - Deploy: GitHub Pages (artifact name `pages`)
 
 ## Repo Structure
 
-- `src/` — application code (components, pages, styles)
-- `public/` — static assets copied to the build as-is
-- `tests/` — Playwright E2E tests (excluded from Vitest)
-- `.github/workflows/` — CI/CD pipelines (build, deploy, CodeQL, dependency update)
+- `src/` - application code (components, pages, styles)
+- `src/content/` - structured site content and content-specific helpers
+- `public/` - static assets copied to the build as-is
+- `tests/` - Playwright E2E tests (excluded from Vitest)
+- `docs/` - project maintenance notes and policies
+- `.github/workflows/` - CI/CD pipelines (build, deploy, CodeQL, dependency update)
 
 ## Quickstart Commands
 
-- Dev server: `npm run dev`
-- Build: `npm run build`
-- Lint: `npm run lint`
-- Unit tests: `npm test` (Vitest)
-- E2E tests: `npm run test:e2e` (requires Playwright browsers; run `npx playwright install` once)
+- Enable package manager: `corepack enable`
+- Install: `pnpm install --frozen-lockfile`
+- Dev server: `pnpm run dev`
+- Build: `pnpm run build`
+- Lint: `pnpm run lint`
+- Typecheck: `pnpm run typecheck`
+- Unit tests: `pnpm test` (Vitest)
+- Standard verification: `pnpm run verify`
+- E2E tests: `pnpm run test:e2e` (requires Playwright browsers; run `pnpm exec playwright install` once)
 
-Node version from `.nvmrc` is expected in CI. Use `npm ci` to reproduce CI behavior.
+Node version from `.nvmrc` is expected in CI. Use `pnpm install --frozen-lockfile` to reproduce CI behavior.
+If Corepack cannot create a global `pnpm` shim locally, use `corepack pnpm ...`.
 
 ## Testing Guidance (Vitest + RTL)
 
@@ -60,29 +68,31 @@ it('shows About heading', () => {
 Workflows (see `.github/workflows`):
 
 - See the CI workflows guide for detailed structure and interactions: [CI Workflows Guide](.github/workflows/agents.md)
-
 - `build.yml`
-  - Jobs: `check_outdated_dependencies`, `audit`, `lint`, `test`, `build`
-  - `build` depends on `lint` and `test` and uploads artifact `pages` from `dist/`
-  - Installs with `npm ci --no-audit --no-fund`
+  - Jobs: `audit`, `lint`, `typecheck`, `test`, `build`
+  - `build` depends on `lint`, `typecheck`, and `test` and uploads artifact `pages` from `dist/`
+  - Installs with `pnpm install --frozen-lockfile`
 - `deploy.yml`
-  - Triggers on `workflow_run` completion of `build` and only deploys on success
+  - Triggers on `workflow_run` completion of `build` and only deploys on successful `push` runs from `main`
   - Downloads `pages` artifact and publishes via `actions/deploy-pages@v4`
-- `codeql.yml` — static analysis
-- `update-deps.yml` — automated dependency update utility
+- `codeql.yml` - static analysis
+- `update-deps.yml` - automated dependency update utility
 
 View recent runs with GitHub CLI:
 
-```
+```bash
 gh run list --branch main --limit 10
 gh run view <run-id> --log
 ```
 
 ## Dependency Management
 
-- Lockfile: `package-lock.json` (npm)
-- Install: `npm ci` for reproducible installs
-- Outdated report: Produced during CI and summarized in the job output; PRs get a comment with a table when relevant.
+- Package manager: pnpm 11 pinned in `package.json`
+- Lockfile: `pnpm-lock.yaml`
+- Install: `pnpm install --frozen-lockfile` for reproducible installs
+- Minimum release age: 7 days via `pnpm-workspace.yaml`
+- Exceptions: `minimumReleaseAgeExclude` should stay empty unless a specific exception is justified and audited
+- Policy details: [Dependency Management](docs/dependency-management.md)
 
 ## Coding Conventions
 
@@ -107,7 +117,7 @@ gh run view <run-id> --log
 ## E2E Tests (Playwright)
 
 - Tests live in `tests/` and use `playwright.config.ts`.
-- Run locally with `npm run test:e2e`. First time, install browsers via `npx playwright install`.
+- Run locally with `pnpm run test:e2e`. First time, install browsers via `pnpm exec playwright install`.
 - Keep E2E fast and resilient; prefer data-testid or roles.
 
 ## Deployment
@@ -122,13 +132,13 @@ gh run view <run-id> --log
 - Missing browser APIs (e.g., `requestAnimationFrame`): add polyfills in `src/setupTests.ts`.
 - Brittle text assertions: prefer roles/labels or stable headings over decorative content.
 - Large/async effects causing unhandled rejections: cancel timers and await promises in tests.
+- Fresh package releases blocked by pnpm: check `minimumReleaseAge` in `pnpm-workspace.yaml` before adding an exception.
 
 ## Agent Checklist for Changes
 
-- Run `npm run lint` and ensure it passes.
-- Run `npm test` and ensure all tests pass.
-- Run `npm run build` to verify production build.
-- Consider CI impact: artifact name remains `pages`; `build` depends on `lint` and `test`.
+- Run `pnpm run verify` and ensure it passes.
+- Run `pnpm run test:e2e` when routes, assets, or browser behavior changed.
+- Consider CI impact: artifact name remains `pages`; `build` depends on `lint`, `typecheck`, and `test`.
 - Update docs when changing behaviors, routes, or environment assumptions.
 - Keep PRs small and focused; explain rationale and trade-offs.
 

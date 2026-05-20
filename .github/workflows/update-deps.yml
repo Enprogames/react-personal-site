@@ -17,31 +17,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node.js (cache npm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: package-lock.json
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install deps
-        run: npm ci --no-audit --no-fund
+        run: pnpm install --frozen-lockfile
+
+      - name: Audit release-age exceptions
+        run: |
+          if grep -q '^minimumReleaseAgeExclude: \[\]' pnpm-workspace.yaml; then
+            echo "No minimumReleaseAgeExclude entries configured." >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "### minimumReleaseAgeExclude entries"
+              sed -n '/^minimumReleaseAgeExclude:/,$p' pnpm-workspace.yaml
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::minimumReleaseAgeExclude is not empty; review and remove exceptions when they are no longer needed."
+          fi
 
       - name: Report latest available updates
         continue-on-error: true
-        run: npx npm-check-updates --target latest
+        run: pnpm dlx npm-check-updates --target latest
 
       - name: Update versions with npm-check-updates
-        run: npx npm-check-updates -u --target semver
+        run: pnpm dlx npm-check-updates -u --target semver
 
       - name: Install updated deps
-        run: npm install
+        run: pnpm install
 
-      - name: Run audit fix (best-effort)
-        run: npm audit fix || true
+      - name: Run pnpm audit (non-blocking)
+        continue-on-error: true
+        run: pnpm audit
 
       - name: Verify clean install from lockfile
-        run: npm ci --no-audit --no-fund
+        run: pnpm install --frozen-lockfile
 
       - name: Check for package.json changes
         id: package_json
@@ -52,14 +68,8 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Build production bundle
-        run: npm run build
+      - name: Verify
+        run: pnpm run verify
 
       - name: Create PR
         id: create_pr
@@ -72,14 +82,12 @@ jobs:
           title: "chore(deps): update dependencies"
           branch: chore/update-deps
           body: |
-            Automated dependency updates using npm-check-updates and npm audit fix.
-            - Ran `npx npm-check-updates -u --target semver`
-            - Ran `npm install`
-            - Ran `npm audit fix` (best-effort)
-            - Ran `npm ci --no-audit --no-fund`
-            - Ran `npm run lint`
-            - Ran `npm test`
-            - Ran `npm run build`
+            Automated dependency updates using npm-check-updates and pnpm.
+            - Ran `pnpm dlx npm-check-updates -u --target semver`
+            - Ran `pnpm install`
+            - Ran `pnpm audit` (non-blocking report)
+            - Ran `pnpm install --frozen-lockfile`
+            - Ran `pnpm run verify`
 
       - name: Skip PR creation (package.json unchanged)
         if: ${{ steps.package_json.outputs.changed != 'true' }}

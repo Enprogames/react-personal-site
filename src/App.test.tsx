@@ -15,17 +15,15 @@ describe('App navigation', () => {
   const originalFetch = globalThis.fetch;
 
   beforeAll(() => {
-    globalThis.fetch = vi.fn((input: RequestInfo) => {
-      const url = typeof input === 'string' ? input : input.toString();
+    globalThis.fetch = vi.fn(async (input: RequestInfo | URL) => {
+      const url = input instanceof Request ? input.url : input.toString();
       if (url.includes('api.github.com/users')) {
-        return Promise.resolve({
-          json: () => Promise.resolve({ avatar_url: 'https://example.com/avatar.png' }),
-        }) as any;
+        return Response.json({ avatar_url: 'https://example.com/avatar.png' });
       }
-      return Promise.resolve({
-        text: () => Promise.resolve('# Test'),
-      }) as any;
-    });
+      return new Response('# Test', {
+        headers: { 'Content-Type': 'text/markdown' },
+      });
+    }) as typeof fetch;
   });
 
   afterAll(() => {

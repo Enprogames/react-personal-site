@@ -4,7 +4,7 @@ import bannerImg from '../Assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
 import ProjectCard from '../components/ProjectCard';
-import { projects } from '../Assets/projects';
+import { projects } from '../content/projects';
 
 const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];
 
@@ -61,8 +61,8 @@ const Home: FC = () => {
             Portfolio
           </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {projects.map((project, index) => (
-              <div key={index}>
+            {projects.map((project) => (
+              <div key={project.title}>
                 <ProjectCard
                   title={project.title}
                   description={project.description}

@@ -1,7 +1,8 @@
 // components/ProjectCard/index.tsx
 import type { FC } from 'react';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
+import { getProjectAnchorId } from '../../content/projectAnchors';
 import './ProjectCard.css';
 
 interface ProjectCardProps {
@@ -12,13 +13,8 @@ interface ProjectCardProps {
 
 const ProjectCard: FC<ProjectCardProps> = ({ title, description, imgSrc }) => {
   return (
-    <HashLink
-      to={`/projects#${encodeURIComponent(title.toLowerCase().replace(/ /g, '-'))}`}
-      scroll={(el) => {
-        const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
-        const yOffset = -60; // Adjust this value based on your navbar's height
-        window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
-      }}
+    <Link
+      to={`/Projects#${getProjectAnchorId(title)}`}
       className="no-underline"
     >
       <Card className="shadow-md h-full transition-transform hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
@@ -34,7 +30,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ title, description, imgSrc }) => {
           )}
         </CardContent>
       </Card>
-    </HashLink>
+    </Link>
   );
 };
 
