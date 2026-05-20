@@ -373,7 +373,7 @@ E2E (Playwright):
 
 1) Add assets under `public/backgrounds/` (export AVIF/WebP/JPG).
 2) Implement Option 1 or 2 in a short PR; verify locally with `pnpm run dev`.
-3) Run `pnpm test` and `pnpm run build` to ensure no regressions.
+3) Run `pnpm run verify` to ensure no regressions.
 4) Validate E2E basic navigation to ensure no interaction blocking.
 5) Iterate on opacity/overlay to balance presence vs readability.
 

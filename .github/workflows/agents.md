@@ -12,7 +12,7 @@ This document describes the workflows under `.github/workflows/`, how they are s
 
 Workflows:
 
-- `build.yml` - main pipeline (dependency report, audit, lint, unit tests, build + artifact)
+- `build.yml` - main pipeline (audit, lint, typecheck, unit tests, build + artifact)
 - `deploy.yml` - publishes the `pages` artifact to GitHub Pages after a successful `build` run
 - `codeql.yml` - static code analysis via CodeQL
 - `update-deps.yml` - scheduled dependency updates with PR automation
@@ -27,15 +27,8 @@ Triggers:
 Permissions:
 
 - `contents: read` at workflow level
-- `pull-requests: write`, `issues: write` only on the outdated-deps job (for PR comments)
 
 Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
-
-- Dependencies Report
-  - Checks for outdated dependencies using `pnpm outdated --format json`
-  - Writes a summary table to the GitHub Step Summary
-  - On PRs, posts/updates a comment with the table (non-blocking; resilient JSON parsing)
-  - Uses pnpm cache and installs with `pnpm install --frozen-lockfile`
 
 - Security Audit (non-blocking)
   - Runs `pnpm audit`
@@ -45,18 +38,21 @@ Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
   - Installs with `pnpm install --frozen-lockfile`
   - Runs `pnpm run lint` (ESLint 9 flat config)
 
+- Typecheck
+  - Installs with `pnpm install --frozen-lockfile`
+  - Runs `pnpm run typecheck`
+
 - Unit Tests
   - Installs with `pnpm install --frozen-lockfile`
   - Runs `pnpm test` (Vitest in `jsdom` environment)
 
 - Build & Pages Artifact
-  - Needs: `lint`, `test`
+  - Needs: `lint`, `typecheck`, `test`
   - Builds with `pnpm run build` (TypeScript + Vite)
   - Uploads artifact `pages` from `./dist` using `actions/upload-artifact@v4`
 
 Notes:
 
-- Outdated-deps job is defensive with JSON to avoid failing CI due to noisy output.
 - Keep artifact name as `pages` for compatibility with `deploy.yml`.
 
 ## deploy.yml
@@ -96,7 +92,7 @@ Job: update-deps
 - Runs `pnpm dlx npm-check-updates -u --target semver`, then `pnpm install`
 - Runs `pnpm audit` as a non-blocking report
 - Verifies the final lockfile with `pnpm install --frozen-lockfile`
-- Runs `pnpm run lint`, `pnpm test`, and `pnpm run build` before opening a PR
+- Runs `pnpm run verify` before opening a PR
 - Opens a PR with `peter-evans/create-pull-request@v8` only when `package.json` changes
 - PR creation requires enabling "Allow GitHub Actions to create and approve pull requests" or setting `UPDATE_DEPS_TOKEN`
 
@@ -104,7 +100,7 @@ Job: update-deps
 
 - Use the version in `.nvmrc`.
 - Use pnpm through Corepack.
-- Install with `pnpm install --frozen-lockfile`, run lint with `pnpm run lint`, run tests with `pnpm test`, and build with `pnpm run build`.
+- Install with `pnpm install --frozen-lockfile` and verify with `pnpm run verify`.
 - View recent CI runs:
 
   - `gh run list --branch main --limit 10`

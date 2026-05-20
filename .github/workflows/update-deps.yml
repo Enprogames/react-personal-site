@@ -68,14 +68,8 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Run lint
-        run: pnpm run lint
-
-      - name: Run unit tests
-        run: pnpm test
-
-      - name: Build production bundle
-        run: pnpm run build
+      - name: Verify
+        run: pnpm run verify
 
       - name: Create PR
         id: create_pr
@@ -93,9 +87,7 @@ jobs:
             - Ran `pnpm install`
             - Ran `pnpm audit` (non-blocking report)
             - Ran `pnpm install --frozen-lockfile`
-            - Ran `pnpm run lint`
-            - Ran `pnpm test`
-            - Ran `pnpm run build`
+            - Ran `pnpm run verify`
 
       - name: Skip PR creation (package.json unchanged)
         if: ${{ steps.package_json.outputs.changed != 'true' }}

@@ -1,7 +1,22 @@
 /* ProjectPane.css */
+.project-pane {
+  scroll-margin-top: 5rem;
+}
+
 .project-image {
   width: 100%; /* Make the image responsive to its parent container */
   height: 200px; /* Fixed height */
   object-fit: cover; /* Cover the area without losing aspect ratio */
   border-radius: 0.25rem; /* Optional: Adds rounded corners */
+}
+
+.project-code-block {
+  margin: 0;
+  overflow-x: auto;
+  border-radius: 0.375rem;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }

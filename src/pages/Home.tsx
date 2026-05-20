@@ -4,7 +4,7 @@ import bannerImg from '../Assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
 import ProjectCard from '../components/ProjectCard';
-import { projects } from '../Assets/projects';
+import { projects } from '../content/projects';
 
 const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];
 

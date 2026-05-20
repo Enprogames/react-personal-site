@@ -16,9 +16,7 @@ My portfolio website, created using [React.js](https://react.dev/).
 If Corepack cannot create a global `pnpm` shim on Windows, use `corepack pnpm ...` for the same commands.
 
 Useful local checks:
-- `pnpm run lint`
-- `pnpm test`
-- `pnpm run build`
+- `pnpm run verify`
 - `pnpm run test:e2e`
 
 Updating the site:
@@ -42,7 +40,5 @@ Dependency management policy is documented in [docs/dependency-management.md](do
 3. Install and verify
     ```bash
     pnpm install
-    pnpm run lint
-    pnpm test
-    pnpm run build
+    pnpm run verify
     ```

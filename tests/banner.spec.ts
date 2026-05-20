@@ -28,3 +28,12 @@ test('homepage banner image loads without 404', async ({ page }) => {
   const naturalWidth = await img.evaluate((el) => (el as HTMLImageElement).naturalWidth);
   expect(naturalWidth).toBeGreaterThan(0);
 });
+
+test('project cards navigate to their project sections', async ({ page }) => {
+  await page.goto('/');
+
+  await page.locator('a[href$="#bitcoin-research-project"]').click();
+
+  await expect(page).toHaveURL(/#\/Projects#bitcoin-research-project$/);
+  await expect(page.locator('#bitcoin-research-project')).toBeVisible();
+});

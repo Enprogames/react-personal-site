@@ -57,9 +57,7 @@ Routine automated updates should stay within the current semver ranges:
 pnpm dlx npm-check-updates
 pnpm dlx npm-check-updates -u --target semver
 pnpm install
-pnpm run lint
-pnpm test
-pnpm run build
+pnpm run verify
 ```
 
 The scheduled dependency workflow follows this shape and opens a PR only when `package.json` changes.
@@ -72,9 +70,7 @@ Before merging a major dependency update, verify:
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm run lint
-pnpm test
-pnpm run build
+pnpm run verify
 pnpm run test:e2e
 pnpm audit
 pnpm outdated

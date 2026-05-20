@@ -15,6 +15,7 @@ This document helps human and AI coding agents contribute safely and productivel
 ## Repo Structure
 
 - `src/` - application code (components, pages, styles)
+- `src/content/` - structured site content and content-specific helpers
 - `public/` - static assets copied to the build as-is
 - `tests/` - Playwright E2E tests (excluded from Vitest)
 - `docs/` - project maintenance notes and policies
@@ -27,7 +28,9 @@ This document helps human and AI coding agents contribute safely and productivel
 - Dev server: `pnpm run dev`
 - Build: `pnpm run build`
 - Lint: `pnpm run lint`
+- Typecheck: `pnpm run typecheck`
 - Unit tests: `pnpm test` (Vitest)
+- Standard verification: `pnpm run verify`
 - E2E tests: `pnpm run test:e2e` (requires Playwright browsers; run `pnpm exec playwright install` once)
 
 Node version from `.nvmrc` is expected in CI. Use `pnpm install --frozen-lockfile` to reproduce CI behavior.
@@ -66,8 +69,8 @@ Workflows (see `.github/workflows`):
 
 - See the CI workflows guide for detailed structure and interactions: [CI Workflows Guide](.github/workflows/agents.md)
 - `build.yml`
-  - Jobs: `check_outdated_dependencies`, `audit`, `lint`, `test`, `build`
-  - `build` depends on `lint` and `test` and uploads artifact `pages` from `dist/`
+  - Jobs: `audit`, `lint`, `typecheck`, `test`, `build`
+  - `build` depends on `lint`, `typecheck`, and `test` and uploads artifact `pages` from `dist/`
   - Installs with `pnpm install --frozen-lockfile`
 - `deploy.yml`
   - Triggers on `workflow_run` completion of `build` and only deploys on successful `push` runs from `main`
@@ -133,10 +136,9 @@ gh run view <run-id> --log
 
 ## Agent Checklist for Changes
 
-- Run `pnpm run lint` and ensure it passes.
-- Run `pnpm test` and ensure all tests pass.
-- Run `pnpm run build` to verify production build.
-- Consider CI impact: artifact name remains `pages`; `build` depends on `lint` and `test`.
+- Run `pnpm run verify` and ensure it passes.
+- Run `pnpm run test:e2e` when routes, assets, or browser behavior changed.
+- Consider CI impact: artifact name remains `pages`; `build` depends on `lint`, `typecheck`, and `test`.
 - Update docs when changing behaviors, routes, or environment assumptions.
 - Keep PRs small and focused; explain rationale and trade-offs.
 

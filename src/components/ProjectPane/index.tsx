@@ -1,11 +1,9 @@
 // components/ProjectPane/index.tsx
 import type { FC } from 'react';
 import { Container, Card, CardContent, Typography, Button, Box } from '@mui/material';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { FaGithub as FaGithubIcon } from 'react-icons/fa';
-import type { ProjectElement } from '../../types/projects';
-import { getProjectAnchorId } from '../../utils/projectAnchors';
+import type { ProjectElement } from '../../content/projects.types';
+import { getProjectAnchorId } from '../../content/projectAnchors';
 import './ProjectPane.css';
 
 interface ProjectPaneProps {
@@ -31,7 +29,7 @@ export const ProjectPane: FC<ProjectPaneProps> = ({
   const FaGithub = FaGithubIcon as unknown as FC;
 
   return (
-    <Container id={id} className="my-6">
+    <Container id={id} className="project-pane my-6">
       <Card className="shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
         <CardContent className="space-y-4">
           <Typography variant="h4" gutterBottom>{title}</Typography>
@@ -89,9 +87,9 @@ export const ProjectPane: FC<ProjectPaneProps> = ({
                 case 'code':
                   return (
                     <Box key={index} className="my-4">
-                      <SyntaxHighlighter language={element.language ?? 'text'} style={dracula}>
-                        {element.content}
-                      </SyntaxHighlighter>
+                      <pre className="project-code-block">
+                        <code data-language={element.language ?? 'text'}>{element.content}</code>
+                      </pre>
                     </Box>
                   );
                 default:

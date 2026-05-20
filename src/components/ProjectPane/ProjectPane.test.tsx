@@ -29,9 +29,7 @@ describe('ProjectPane', () => {
     expect(screen.getByText('Python')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'SQL Injection Example Website' })).toHaveAttribute('src', '/project.png');
     expect(screen.getByRole('img', { name: 'Architecture diagram' })).toHaveAttribute('src', '/diagram.png');
-    expect(
-      screen.getAllByText((_, element) => element?.textContent === 'SELECT * FROM auth_user;').length,
-    ).toBeGreaterThan(0);
+    expect(screen.getByText('SELECT * FROM auth_user;')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /repository/i })).toHaveAttribute(
       'href',
       'https://github.com/example/project',
