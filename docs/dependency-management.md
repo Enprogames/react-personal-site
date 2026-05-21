@@ -15,6 +15,12 @@ If Corepack cannot create a global `pnpm` shim locally, use `corepack pnpm ...` 
 
 CI uses the same install mode. Do not commit `package-lock.json` or use npm to update the dependency tree.
 
+## Direct Dependency Policy
+
+If source code imports a package directly, that package must be listed directly in `dependencies` or `devDependencies`. Do not rely on packages that happen to be present only as transitive dependencies.
+
+This matters with pnpm because its strict dependency model does not make transitive packages part of this project's public import surface. A dependency may appear in a local `node_modules` tree and still fail in CI if it is not declared by this project.
+
 ## Release-Age Policy
 
 `pnpm-workspace.yaml` enforces a seven-day minimum release age:

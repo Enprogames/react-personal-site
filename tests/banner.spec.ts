@@ -37,3 +37,11 @@ test('project cards navigate to their project sections', async ({ page }) => {
   await expect(page).toHaveURL(/#\/Projects#bitcoin-research-project$/);
   await expect(page.locator('#bitcoin-research-project')).toBeVisible();
 });
+
+test('resume PDF renders', async ({ page }) => {
+  await page.goto('/#/Resume');
+
+  await expect(page.locator('a').filter({ hasText: /download resume/i })).toBeVisible();
+  await expect(page.locator('canvas')).toHaveCount(3);
+  await expect(page.locator('text=/failed to load pdf/i')).toHaveCount(0);
+});

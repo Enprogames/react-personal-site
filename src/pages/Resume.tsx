@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, type FC } from 'react';
 import { Button, Container, Card, CardContent } from '@mui/material';
 import { pdfjs, Document, Page } from 'react-pdf';
 import { AiOutlineDownload } from 'react-icons/ai';
+import pdfWorkerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import resume_pdf from '../Assets/resume.pdf';
 import './Resume.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -10,10 +11,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 
 const DownloadIcon = AiOutlineDownload as FC<{ size?: number; className?: string }>;
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerSrc;
 
 const Resume: FC = () => {
   const [numPages, setNumPages] = useState<number | null>(null);

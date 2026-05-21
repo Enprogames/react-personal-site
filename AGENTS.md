@@ -90,6 +90,7 @@ gh run view <run-id> --log
 - Package manager: pnpm 11 pinned in `package.json`
 - Lockfile: `pnpm-lock.yaml`
 - Install: `pnpm install --frozen-lockfile` for reproducible installs
+- Direct imports must be declared directly in `dependencies` or `devDependencies`; do not rely on transitive dependencies
 - Minimum release age: 7 days via `pnpm-workspace.yaml`
 - Exceptions: `minimumReleaseAgeExclude` should stay empty unless a specific exception is justified and audited
 - Policy details: [Dependency Management](docs/dependency-management.md)
