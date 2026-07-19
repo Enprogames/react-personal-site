@@ -5,6 +5,7 @@ export type ProjectElement =
   | { type: 'code'; content: string; language?: string };
 
 export interface Project {
+  id: string;
   title: string;
   description?: string;
   keyPoints?: string[];
