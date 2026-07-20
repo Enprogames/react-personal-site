@@ -39,7 +39,9 @@ const About: FC = () => {
               h1: ({ node: _node, ...props }) => <Typography variant="h4" gutterBottom {...props} />,
               h2: ({ node: _node, ...props }) => <Typography variant="h5" gutterBottom {...props} />,
               h3: ({ node: _node, ...props }) => <Typography variant="h6" gutterBottom {...props} />,
-              p: ({ node: _node, ...props }) => <Typography paragraph {...props} />,
+              p: ({ node: _node, ...props }) => (
+                <Typography component="p" sx={{ mb: 2 }} {...props} />
+              ),
               li: ({ node: _node, ...props }) => (
                 <li>
                   <Typography component="span" {...props} />
