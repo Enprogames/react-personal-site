@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Enable Corepack
+        run: corepack enable
       - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
@@ -44,6 +46,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Enable Corepack
+        run: corepack enable
       - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
@@ -62,6 +66,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Enable Corepack
+        run: corepack enable
       - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
@@ -80,6 +86,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Enable Corepack
+        run: corepack enable
       - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:
@@ -99,6 +107,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Enable Corepack
+        run: corepack enable
       - name: Setup Node.js (cache pnpm)
         uses: actions/setup-node@v5
         with:

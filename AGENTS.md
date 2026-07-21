@@ -7,7 +7,7 @@ This document helps human and AI coding agents contribute safely and productivel
 - Framework: React + TypeScript (Vite)
 - UI: MUI 7 + TailwindCSS 4
 - Routing: `react-router-dom` (HashRouter)
-- Package manager: pnpm 11 via Corepack (CI uses `actions/setup-node@v5`'s built-in Corepack support; no `pnpm/action-setup` needed)
+- Package manager: pnpm 11 via Corepack (CI uses `actions/setup-node@v5`'s built-in Corepack support with a `corepack enable` step; no `pnpm/action-setup` needed)
 - Tests: Vitest + React Testing Library (unit/integration), Playwright (E2E)
 - Build: `vite build`
 - Deploy: GitHub Pages (artifact name `pages`)
@@ -72,7 +72,7 @@ Workflows (see `.github/workflows`):
 - `build.yml`
   - Jobs: `audit`, `lint`, `typecheck`, `test`, `build`
   - `build` depends on `lint`, `typecheck`, and `test` and uploads artifact `pages` from `dist/`
-  - pnpm is set up by `actions/setup-node@v5`'s built-in Corepack support (no `pnpm/action-setup` step)
+  - pnpm is set up by `actions/setup-node@v5`'s built-in Corepack support (preceded by a `corepack enable` step; no `pnpm/action-setup` step)
   - Installs with `pnpm install --frozen-lockfile`
 - `deploy.yml`
   - Triggers on `workflow_run` completion of `build` and only deploys on successful `push` runs from `main`

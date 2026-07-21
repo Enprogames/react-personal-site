@@ -53,7 +53,7 @@ Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm via Corepack from `packa
 
 Notes:
 
-- pnpm is set up by `actions/setup-node@v5`'s built-in Corepack support (no separate `pnpm/action-setup` step needed).
+- Each job runs `corepack enable` before `actions/setup-node@v5` to make pnpm available on PATH for the `cache: pnpm` feature. pnpm is then managed by Corepack from the `packageManager` field (no separate `pnpm/action-setup` step needed).
 - Keep artifact name as `pages` for compatibility with `deploy.yml`.
 
 ## deploy.yml
@@ -75,7 +75,7 @@ Jobs:
 
 - Runs CodeQL static analysis.
 - Triggered on push/PR to `main` and via a weekly schedule.
-- Uses Node from `.nvmrc`, pnpm via Corepack from `packageManager`, and installs with `pnpm install --frozen-lockfile`.
+- Uses Node from `.nvmrc`, pnpm via Corepack from `packageManager` (enabled via `corepack enable` before `setup-node`), and installs with `pnpm install --frozen-lockfile`.
 
 ## update-deps.yml
 
@@ -86,7 +86,7 @@ Triggers:
 
 Job: update-deps
 
-- Sets up Node from `.nvmrc` with pnpm cache (Corepack enabled automatically by `actions/setup-node@v5` via `packageManager` field)
+- Enables Corepack and sets up Node from `.nvmrc` with pnpm cache (`setup-node@v5` with `cache: pnpm`)
 - Installs with `pnpm install --frozen-lockfile`
 - Summarizes any `minimumReleaseAgeExclude` entries for regular audit
 - Reports latest available dependency updates without changing files
