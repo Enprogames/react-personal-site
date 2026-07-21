@@ -7,7 +7,7 @@ This document describes the workflows under `.github/workflows/`, how they are s
 - Node.js: from `.nvmrc` (actions/setup-node@v5)
 - Package manager: pnpm 11 via Corepack (enabled automatically by `actions/setup-node@v5` through the `packageManager` field in `package.json`)
 - Build tool: Vite (`vite build`)
-- Tests: Vitest + React Testing Library; Playwright lives in `tests/` but is not run in CI by default
+- Tests: Vitest + React Testing Library (unit/integration) + Playwright (E2E, run in CI)
 - Deploy: GitHub Pages (artifact name `pages` from `./dist`)
 
 Workflows:
@@ -46,8 +46,13 @@ Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm via Corepack from `packa
   - Installs with `pnpm install --frozen-lockfile`
   - Runs `pnpm test` (Vitest in `jsdom` environment)
 
+- E2E Tests
+  - Installs with `pnpm install --frozen-lockfile`
+  - Installs Playwright browsers (`pnpm exec playwright install --with-deps chromium`)
+  - Runs `pnpm run test:e2e` (Playwright against the Vite dev server)
+
 - Build & Pages Artifact
-  - Needs: `lint`, `typecheck`, `test`
+  - Needs: `lint`, `typecheck`, `test`, `e2e`
   - Builds with `pnpm run build` (TypeScript + Vite)
   - Uploads artifact `pages` from `./dist` using `actions/upload-artifact@v4`
 

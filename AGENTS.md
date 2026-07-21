@@ -70,8 +70,8 @@ Workflows (see `.github/workflows`):
 
 - See the CI workflows guide for detailed structure and interactions: [CI Workflows Guide](.github/workflows/agents.md)
 - `build.yml`
-  - Jobs: `audit`, `lint`, `typecheck`, `test`, `build`
-  - `build` depends on `lint`, `typecheck`, and `test` and uploads artifact `pages` from `dist/`
+  - Jobs: `audit`, `lint`, `typecheck`, `test`, `e2e`, `build`
+  - `build` depends on `lint`, `typecheck`, `test`, and `e2e` and uploads artifact `pages` from `dist/`
   - pnpm is set up by `actions/setup-node@v5`'s built-in Corepack support (preceded by a `corepack enable` step; no `pnpm/action-setup` step)
   - Installs with `pnpm install --frozen-lockfile`
 - `deploy.yml`
