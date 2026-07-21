@@ -5,7 +5,7 @@ This document describes the workflows under `.github/workflows/`, how they are s
 ## Overview
 
 - Node.js: from `.nvmrc` (actions/setup-node@v5)
-- Package manager: pnpm 11 (`pnpm install --frozen-lockfile` in CI)
+- Package manager: pnpm 11 via Corepack (enabled automatically by `actions/setup-node@v5` through the `packageManager` field in `package.json`)
 - Build tool: Vite (`vite build`)
 - Tests: Vitest + React Testing Library; Playwright lives in `tests/` but is not run in CI by default
 - Deploy: GitHub Pages (artifact name `pages` from `./dist`)
@@ -28,7 +28,7 @@ Permissions:
 
 - `contents: read` at workflow level
 
-Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
+Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm via Corepack from `packageManager`):
 
 - Security Audit (non-blocking)
   - Runs `pnpm audit`
@@ -53,6 +53,7 @@ Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
 
 Notes:
 
+- pnpm is set up by `actions/setup-node@v5`'s built-in Corepack support (no separate `pnpm/action-setup` step needed).
 - Keep artifact name as `pages` for compatibility with `deploy.yml`.
 
 ## deploy.yml
@@ -74,7 +75,7 @@ Jobs:
 
 - Runs CodeQL static analysis.
 - Triggered on push/PR to `main` and via a weekly schedule.
-- Uses Node from `.nvmrc`, pnpm from `packageManager`, and installs with `pnpm install --frozen-lockfile`.
+- Uses Node from `.nvmrc`, pnpm via Corepack from `packageManager`, and installs with `pnpm install --frozen-lockfile`.
 
 ## update-deps.yml
 
@@ -85,7 +86,7 @@ Triggers:
 
 Job: update-deps
 
-- Sets up pnpm from `packageManager` and Node from `.nvmrc` with pnpm cache
+- Sets up Node from `.nvmrc` with pnpm cache (Corepack enabled automatically by `actions/setup-node@v5` via `packageManager` field)
 - Installs with `pnpm install --frozen-lockfile`
 - Summarizes any `minimumReleaseAgeExclude` entries for regular audit
 - Reports latest available dependency updates without changing files
