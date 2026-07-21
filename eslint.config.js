@@ -45,7 +45,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/**/*.test.{ts,tsx}', 'src/setupTests.ts', 'tests/**/*.{ts,tsx}'],
+    files: ['src/**/*.test.{ts,tsx}', 'src/setupTests.ts'],
     extends: [
       testingLibrary.configs['flat/react'],
       jestDom.configs['flat/recommended'],
@@ -55,6 +55,15 @@ export default tseslint.config(
         ...globals.browser,
         ...globals.node,
         ...globals.vitest,
+      },
+    },
+  },
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
       },
     },
   },
