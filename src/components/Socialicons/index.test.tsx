@@ -8,7 +8,7 @@ import { Socialicons } from './index';
 // - github/linkedin/facebook/youtube/twitch: URL + icon → rendered
 // - twitter: empty URL but has icon → skipped by !url check
 // - nonexistent: has URL but no icon → skipped by !IconComponent check
-vi.mock('../../Assets/social_accounts', () => ({
+vi.mock('../../assets/social_accounts', () => ({
   socialprofiles: {
     github: 'https://github.com/test',
     linkedin: 'https://linkedin.com/in/test',

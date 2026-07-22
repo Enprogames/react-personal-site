@@ -9,7 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CustomNavbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ThemeContext } from './ThemeContext';
-import { DarkModeToggle } from './components/toggledarkmode';
+import { DarkModeToggle } from './components/DarkModeToggle';
 
 import Home from './pages/Home';
 import Resume from './pages/Resume';

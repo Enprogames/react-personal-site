@@ -1,6 +1,6 @@
 // src/pages/Home.tsx
 import type { FC } from 'react';
-import bannerImg from '../Assets/img/banner.jpg';
+import bannerImg from '../assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
 import { ProjectSummaryCard, projects } from '../features/projects';

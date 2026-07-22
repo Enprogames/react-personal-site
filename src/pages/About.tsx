@@ -1,7 +1,7 @@
 import { useEffect, useState, type FC } from 'react';
 import { Container, Card, CardContent, Typography, Avatar } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
-import { aboutContent } from '../Assets/about';
+import { aboutContent } from '../assets/about';
 
 const About: FC = () => {
   const [markdown, setMarkdown] = useState<string>('');
