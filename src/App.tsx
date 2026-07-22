@@ -14,7 +14,6 @@ import { DarkModeToggle } from './components/toggledarkmode';
 import Home from './pages/Home';
 import Resume from './pages/Resume';
 import Projects from './pages/Projects';
-import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 
