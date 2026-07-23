@@ -6,10 +6,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import type { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import { CustomNavbar } from './components/Navbar';
-import { Footer } from './components/Footer';
+import { CustomNavbar, Footer, DarkModeToggle } from './components';
 import { ThemeContext } from './ThemeContext';
-import { DarkModeToggle } from './components/DarkModeToggle';
 
 import Home from './pages/Home';
 import Resume from './pages/Resume';

@@ -2,7 +2,7 @@
 import type { FC } from 'react';
 import bannerImg from '../assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
-import { TypingEffect } from '../components/TypingEffect';
+import { TypingEffect } from '../components';
 import { ProjectSummaryCard, projects } from '../features/projects';
 
 const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];

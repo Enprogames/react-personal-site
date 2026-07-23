@@ -14,7 +14,7 @@ This document helps human and AI coding agents contribute safely and productivel
 
 ## Repo Structure
 
-- `src/` - application code (components, pages, styles)
+- `src/` - application code (components, pages, styles; `src/components/` has a barrel export `index.ts`)
 - `src/features/` - feature-specific components, content, types, and tests
 - `src/features/projects/` - project portfolio content and project-specific UI
 - `public/` - static assets copied to the build as-is
