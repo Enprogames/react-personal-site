@@ -1,0 +1,16 @@
+.project-summary-card__link {
+  color: inherit;
+  display: block;
+  height: 100%;
+  text-decoration: none;
+}
+
+.project-summary-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-summary-card__media {
+  height: 200px;
+  object-fit: cover;
+}

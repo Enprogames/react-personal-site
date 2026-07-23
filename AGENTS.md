@@ -7,7 +7,7 @@ This document helps human and AI coding agents contribute safely and productivel
 - Framework: React + TypeScript (Vite)
 - UI: MUI 7 + TailwindCSS 4
 - Routing: `react-router-dom` (HashRouter)
-- Package manager: pnpm 11 via Corepack
+- Package manager: pnpm 11 via Corepack (CI uses `actions/setup-node@v5`'s built-in Corepack support with a `corepack enable` step; no `pnpm/action-setup` needed)
 - Tests: Vitest + React Testing Library (unit/integration), Playwright (E2E)
 - Build: `vite build`
 - Deploy: GitHub Pages (artifact name `pages`)
@@ -15,7 +15,8 @@ This document helps human and AI coding agents contribute safely and productivel
 ## Repo Structure
 
 - `src/` - application code (components, pages, styles)
-- `src/content/` - structured site content and content-specific helpers
+- `src/features/` - feature-specific components, content, types, and tests
+- `src/features/projects/` - project portfolio content and project-specific UI
 - `public/` - static assets copied to the build as-is
 - `tests/` - Playwright E2E tests (excluded from Vitest)
 - `docs/` - project maintenance notes and policies
@@ -69,8 +70,9 @@ Workflows (see `.github/workflows`):
 
 - See the CI workflows guide for detailed structure and interactions: [CI Workflows Guide](.github/workflows/agents.md)
 - `build.yml`
-  - Jobs: `audit`, `lint`, `typecheck`, `test`, `build`
-  - `build` depends on `lint`, `typecheck`, and `test` and uploads artifact `pages` from `dist/`
+  - Jobs: `audit`, `lint`, `typecheck`, `test`, `e2e`, `build`
+  - `build` depends on `lint`, `typecheck`, `test`, and `e2e` and uploads artifact `pages` from `dist/`
+  - pnpm is set up by `actions/setup-node@v5`'s built-in Corepack support (preceded by a `corepack enable` step; no `pnpm/action-setup` step)
   - Installs with `pnpm install --frozen-lockfile`
 - `deploy.yml`
   - Triggers on `workflow_run` completion of `build` and only deploys on successful `push` runs from `main`

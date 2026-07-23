@@ -1,18 +1,19 @@
 import type { Project } from './projects.types';
 
-import flashcardTool1 from '../Assets/img/projects/flashcard-tool1.jpg';
-import flashcardTool2 from '../Assets/img/projects/flashcard-tool2.jpg';
-import clock1 from '../Assets/img/projects/clock1.jpg';
-import musicPlayer1 from '../Assets/img/projects/music-player1.jpg';
-import sqlInjection1 from '../Assets/img/projects/sql-injection1.jpg';
-import sqlInjection2 from '../Assets/img/projects/sql-injection2.jpg';
-import tekku1 from '../Assets/img/projects/tekku_title_page_small.jpeg';
-import tekku2 from '../Assets/img/projects/tekku_title_page_large.jpeg';
-import bitcoin1 from '../Assets/img/projects/bitcoin_history.jpg';
-import bitcoin2 from '../Assets/img/projects/bitcoin_paths.jpg';
+import flashcardTool1 from '../../assets/img/projects/flashcard-tool1.jpg';
+import flashcardTool2 from '../../assets/img/projects/flashcard-tool2.jpg';
+import clock1 from '../../assets/img/projects/clock1.jpg';
+import musicPlayer1 from '../../assets/img/projects/music-player1.jpg';
+import sqlInjection1 from '../../assets/img/projects/sql-injection1.jpg';
+import sqlInjection2 from '../../assets/img/projects/sql-injection2.jpg';
+import tekku1 from '../../assets/img/projects/tekku_title_page_small.jpeg';
+import tekku2 from '../../assets/img/projects/tekku_title_page_large.jpeg';
+import bitcoin1 from '../../assets/img/projects/bitcoin_history.jpg';
+import bitcoin2 from '../../assets/img/projects/bitcoin_paths.jpg';
 
 export const projects = [
   {
+    id: 'bitcoin-research-project',
     title: 'Bitcoin Research Project',
     repositoryLink: 'https://github.com/Enprogames/Bitcoin_JanusGraph',
     thumbnail: bitcoin1,
@@ -47,6 +48,7 @@ export const projects = [
     ],
   },
   {
+    id: 'tekku-php-forum-website',
     title: 'Tekku: PHP Forum Website',
     repositoryLink: 'https://github.com/Enprogames/Tekku',
     thumbnail: tekku1,
@@ -64,6 +66,7 @@ export const projects = [
     ],
   },
   {
+    id: 'sql-injection-example-website',
     title: 'SQL Injection Example Website',
     repositoryLink: 'https://github.com/Enprogames/sql-injection-example',
     thumbnail: sqlInjection1,
@@ -91,6 +94,7 @@ export const projects = [
     ],
   },
   {
+    id: 'flashcard-tool',
     title: 'Flashcard Tool',
     description: 'A program used for displaying flashcards. Flashcards are a great way to study and memorize large amounts of information...',
     keyPoints: [
@@ -103,6 +107,7 @@ export const projects = [
     landscapeImage: flashcardTool2,
   },
   {
+    id: 'school-clock',
     title: 'School Clock',
     description: 'A python clock, created for the computer science classroom at my highschool, which displays the time, current class, whether it is break time, and a joke at the top...',
     keyPoints: [
@@ -114,6 +119,7 @@ export const projects = [
     landscapeImage: clock1,
   },
   {
+    id: 'music-player',
     title: 'Music Player',
     repositoryLink: 'https://github.com/Enprogames/MusicPlayer',
     description: 'A simple music player program written in python. It uses pygame mixer for playing sound files, and TKinter for the user interface...',

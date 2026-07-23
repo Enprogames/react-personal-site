@@ -9,12 +9,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CustomNavbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ThemeContext } from './ThemeContext';
-import { DarkModeToggle } from './components/toggledarkmode';
+import { DarkModeToggle } from './components/DarkModeToggle';
 
 import Home from './pages/Home';
 import Resume from './pages/Resume';
 import Projects from './pages/Projects';
-import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 
@@ -50,7 +49,6 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/Resume" element={<Resume />} />
             <Route path="/Projects" element={<Projects />} />
-            <Route path="/Contact" element={<Contact />} />
             <Route path="/About" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

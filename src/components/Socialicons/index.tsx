@@ -9,7 +9,7 @@ import {
   FaYoutube as FaYoutubeIcon,
   FaTwitch as FaTwitchIcon,
 } from 'react-icons/fa';
-import { socialprofiles } from '../../Assets/social_accounts';
+import { socialprofiles } from '../../assets/social_accounts';
 import { useColorModeValue } from '../../hooks/useColorModeValue';
 
 type SizedIcon = ComponentType<{ size: number }>;

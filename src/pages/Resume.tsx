@@ -4,7 +4,7 @@ import { Button, Container, Card, CardContent } from '@mui/material';
 import { pdfjs, Document, Page } from 'react-pdf';
 import { AiOutlineDownload } from 'react-icons/ai';
 import pdfWorkerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import resume_pdf from '../Assets/resume.pdf';
+import resume_pdf from '../assets/resume.pdf';
 import './Resume.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';

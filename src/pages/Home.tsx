@@ -1,10 +1,9 @@
 // src/pages/Home.tsx
 import type { FC } from 'react';
-import bannerImg from '../Assets/img/banner.jpg';
+import bannerImg from '../assets/img/banner.jpg';
 import { Container, Typography, Chip } from '@mui/material';
 import { TypingEffect } from '../components/TypingEffect';
-import ProjectCard from '../components/ProjectCard';
-import { projects } from '../content/projects';
+import { ProjectSummaryCard, projects } from '../features/projects';
 
 const skills = ['React', 'Node.js', 'Python', 'AWS', 'Django', 'C++'];
 
@@ -62,12 +61,8 @@ const Home: FC = () => {
           </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {projects.map((project) => (
-              <div key={project.title}>
-                <ProjectCard
-                  title={project.title}
-                  description={project.description}
-                  imgSrc={project.thumbnail}
-                />
+              <div key={project.id}>
+                <ProjectSummaryCard project={project} />
               </div>
             ))}
           </div>

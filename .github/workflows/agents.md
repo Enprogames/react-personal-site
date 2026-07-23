@@ -5,9 +5,9 @@ This document describes the workflows under `.github/workflows/`, how they are s
 ## Overview
 
 - Node.js: from `.nvmrc` (actions/setup-node@v5)
-- Package manager: pnpm 11 (`pnpm install --frozen-lockfile` in CI)
+- Package manager: pnpm 11 via Corepack (enabled automatically by `actions/setup-node@v5` through the `packageManager` field in `package.json`)
 - Build tool: Vite (`vite build`)
-- Tests: Vitest + React Testing Library; Playwright lives in `tests/` but is not run in CI by default
+- Tests: Vitest + React Testing Library (unit/integration) + Playwright (E2E, run in CI)
 - Deploy: GitHub Pages (artifact name `pages` from `./dist`)
 
 Workflows:
@@ -28,7 +28,7 @@ Permissions:
 
 - `contents: read` at workflow level
 
-Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
+Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm via Corepack from `packageManager`):
 
 - Security Audit (non-blocking)
   - Runs `pnpm audit`
@@ -46,13 +46,19 @@ Jobs (runs on `ubuntu-latest`, Node from `.nvmrc`, pnpm from `packageManager`):
   - Installs with `pnpm install --frozen-lockfile`
   - Runs `pnpm test` (Vitest in `jsdom` environment)
 
+- E2E Tests
+  - Installs with `pnpm install --frozen-lockfile`
+  - Installs Playwright browsers (`pnpm exec playwright install --with-deps chromium`)
+  - Runs `pnpm run test:e2e` (Playwright against the Vite dev server)
+
 - Build & Pages Artifact
-  - Needs: `lint`, `typecheck`, `test`
+  - Needs: `lint`, `typecheck`, `test`, `e2e`
   - Builds with `pnpm run build` (TypeScript + Vite)
   - Uploads artifact `pages` from `./dist` using `actions/upload-artifact@v4`
 
 Notes:
 
+- Each job runs `corepack enable` before `actions/setup-node@v5` to make pnpm available on PATH for the `cache: pnpm` feature. pnpm is then managed by Corepack from the `packageManager` field (no separate `pnpm/action-setup` step needed).
 - Keep artifact name as `pages` for compatibility with `deploy.yml`.
 
 ## deploy.yml
@@ -74,7 +80,7 @@ Jobs:
 
 - Runs CodeQL static analysis.
 - Triggered on push/PR to `main` and via a weekly schedule.
-- Uses Node from `.nvmrc`, pnpm from `packageManager`, and installs with `pnpm install --frozen-lockfile`.
+- Uses Node from `.nvmrc`, pnpm via Corepack from `packageManager` (enabled via `corepack enable` before `setup-node`), and installs with `pnpm install --frozen-lockfile`.
 
 ## update-deps.yml
 
@@ -85,7 +91,7 @@ Triggers:
 
 Job: update-deps
 
-- Sets up pnpm from `packageManager` and Node from `.nvmrc` with pnpm cache
+- Enables Corepack and sets up Node from `.nvmrc` with pnpm cache (`setup-node@v5` with `cache: pnpm`)
 - Installs with `pnpm install --frozen-lockfile`
 - Summarizes any `minimumReleaseAgeExclude` entries for regular audit
 - Reports latest available dependency updates without changing files
